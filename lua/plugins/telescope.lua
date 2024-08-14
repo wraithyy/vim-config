@@ -10,6 +10,7 @@ return {
 		vim.keymap.set('n', '<leader>ps', function()
 			builtin.grep_string({ search = vim.fn.input("Grep > ")})
 		end,{desc="Grep string"})
+		vim.keymap.set('n', '<leader>fr', function() require('telescope.builtin').lsp_references() end, {desc="Find references", noremap = true, silent = true })
 	end
 }
 

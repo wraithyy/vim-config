@@ -28,7 +28,7 @@ return {
 			for i, proj in ipairs(project_dirs) do
 				if i > 5 then break end
 				local project_name = vim.fn.fnamemodify(proj.path, ":t")
-				table.insert(projects, dashboard.button(tostring(i), "  " .. project_name, ":e " .. proj.path .. " <CR>"))
+				table.insert(projects, dashboard.button(tostring(i), "  " .. project_name, ":Neotree source=filesystem position=current " .. proj.path .. " <CR>"))
 			end
 			return projects
 		end
@@ -42,13 +42,13 @@ return {
 		-- Přidání tlačítek pro různé funkce
 		dashboard.section.buttons.val = {
 			dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
+			dashboard.button("b", "  Browse files", ":Neotree source=filesystem reveal=true position=current <CR>"),
 			dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
-			dashboard.button("s", "  Restore Session", ":Telescope session-lens<CR>"),
 			dashboard.button("p", "  Find Project", ":Telescope project <CR>"),
 			dashboard.button("r", "  Recent Files", ":Telescope oldfiles <CR>"),
 			dashboard.button("t", "  Find Text", ":Telescope live_grep <CR>"),
-			dashboard.button("c", "  Config", ":e ~/.config/nvim/ <CR>"),
-			dashboard.button("d", "  Development Folders", ":e ~/Development/ <CR>"),
+			dashboard.button("c", "  Config", ":Neotree source=filesystem position=current ~/.config/nvim/ <CR>"),
+			dashboard.button("d", "  Development Folders", ":Neotree source=filesystem position=current: ~/Development/ <CR>"),
 			dashboard.button("q", "  Quit", ":qa<CR>"),
 		}
 
