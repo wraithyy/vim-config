@@ -54,6 +54,8 @@ return {
 				{ noremap = true, silent = true, desc = "Toggle files" })
 			vim.api.nvim_set_keymap('n', '<leader>ee', ':lua FocusOrOpenNeoTree()<CR>',
 				{ noremap = true, silent = true, desc = "Focus Neo-Tree sidebar" })
+			vim.api.nvim_set_keymap('n', '<leader>gs', ':Neotree float git_status<CR>',
+				{ noremap = true, silent = true, desc = "Git status" })
 		end
 	}
 }
