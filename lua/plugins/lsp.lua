@@ -57,6 +57,7 @@ return {
 					{ buffer = bufnr, desc = 'Format Document' })
 				vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>',
 					{ buffer = bufnr, desc = 'Code Actions' })
+				vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 			end
 
 			lsp_zero.extend_lspconfig({
@@ -102,7 +103,7 @@ return {
 					['<Enter>'] = cmp.mapping.confirm({ select = true }),
 
 					-- Trigger completion menu
-					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-S-Space>'] = cmp.mapping.complete(),
 
 					-- Scroll up and down the documentation window
 					['<C-u>'] = cmp.mapping.scroll_docs(-4),

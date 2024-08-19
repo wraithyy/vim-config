@@ -5,8 +5,9 @@ return {
         local ui = require("harpoon.ui")
 
         -- Mapování kláves, podle toho co máš na obrázku
-        vim.keymap.set("n", "<leader>a", mark.add_file, {desc="Add file to harpoon"})
-        vim.keymap.set("n", "<C-p>", ui.toggle_quick_menu, {desc="Toggle harpoon menu"})
+        vim.keymap.set("n", "<leader>ha", mark.add_file, {desc="Add file to harpoon"})
+        vim.keymap.set("n", "<leader>ho", ui.toggle_quick_menu, {desc="Toggle harpoon menu"})
+	vim.keymap.set("n", "<leader>hc", mark.clear_all, {desc="Clear harpoon menu"})
 
         vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end, {desc="Navigate to harpoon file"})
         vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end, {desc="Navigate to harpoon file 2"})

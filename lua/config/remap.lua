@@ -1,3 +1,4 @@
+
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", function () vim.cmd("Neotree position=current reveal=true source=filesystem") end, { desc = "Open Explorer" })
 	
@@ -5,7 +6,7 @@ vim.api.nvim_set_keymap('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<CR
 	{ desc = "Code Action", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>',
 	{ desc = "Show Problems", noremap = true, silent = true })
-
+vim.keymap.set('n', '<space>', '<nop>')
 -- Number remaps --
 vim.api.nvim_set_keymap('n', '+', '1', { noremap = true })
 vim.api.nvim_set_keymap('n', 'ě', '2', { noremap = true })
@@ -35,3 +36,10 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 -- make it rain --
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it Rain" })
+-- go to previous buffer -- 
+vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+-- go to next buffer -- 
+vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
+-- movement to end and beginning of line --
+vim.keymap.set("n", "H", "^")
+vim.keymap.set("n", "L", "$")
