@@ -70,18 +70,83 @@ return {
 		priority = 1000,
 		opts = {
 			transparent_background = true,
+			color_overrides = {
+				all = {
+					-- Map your custom colors to Catppuccin equivalents
+					peach = "#ee5d43", -- Color5
+					green = "#96E072", -- Color6
+					mauve = "#c74ded", -- Color4
+					teal = "#00e8c6", -- Color1
+					overlay0 = "#808085", -- Color0
+					yellow = "#FFE66D", -- Color3
+					orange = "#f39c12", -- Color2
+				},
+			},
 			custom_highlights = function(colors)
-				local u = require("catppuccin.utils.colors")
 				return {
-					LineNr = { fg = colors.teal }, -- Nastavení barvy pro LineNr na teal
-					CmpBorder = { fg = colors.teal },
-					FloatBorder = { fg = colors.teal },
-					CursorLine = {
-						bg = u.vary_color(
-							{ latte = u.lighten(colors.mantle, 0.70, colors.base) },
-							u.darken(colors.surface0, 0.64, colors.base)
-						),
-					},
+					-- Apply specific colors from Catppuccin's palette based on your example
+					Comment = { fg = colors.overlay0 }, -- Color0 mapped to overlay0
+					Identifier = { fg = colors.teal }, -- Color1 mapped to teal
+					Number = { fg = colors.peach }, -- Color2 mapped to peach
+					Function = { fg = colors.yellow }, -- Color3 mapped to yellow
+					Type = { fg = colors.mauve }, -- Color4 mapped to mauve
+					Keyword = { fg = colors.mauve }, -- Color4 mapped to mauve
+					Constant = { fg = colors.peach }, -- Color5 mapped to peach
+					String = { fg = colors.green }, -- Color6 mapped to green
+
+					-- Variables (updated to use colors.teal)
+					TSVariable = { fg = colors.teal }, -- Variable names
+					["@variable"] = { fg = colors.teal }, -- Variable names
+					["@parameter"] = { fg = colors.teal }, -- Variable names
+					["@variable.builtin"] = { fg = colors.teal }, -- Variable names
+					["@variable.member"] = { fg = colors.yellow }, -- Variable names
+					TSParameter = { fg = colors.teal }, -- Parameter names
+					["@property"] = { fg = colors.teal }, -- Property names:
+					["@type"] = { fg = colors.yellow }, -- Type names
+					["@type.builtin"] = { fg = colors.overlay0 }, -- Type names
+					Special = { fg = colors.peach }, -- Special characters
+					["@tag"] = { fg = colors.peach }, -- Tag names
+					["@tag.attribute.tsx"] = { fg = colors.yellow }, -- Tag names
+
+
+					-- Line numbers
+					LineNr = { fg = colors.teal }, -- Regular line numbers
+					CursorLineNr = { fg = colors.teal }, -- Current line number
+
+					-- Additional highlights directly with colors based on your Lua theme example
+					TSLabel = { fg = colors.mauve }, -- Type color
+					TSProperty = { fg = colors.peach }, -- Constant color
+					TSConstBuiltin = { fg = colors.peach }, -- Constant color
+					Folded = { fg = colors.overlay0}, -- Comment color for folded text
+					TSField = { fg = colors.teal }, -- Field names as variables
+					TSPunctBracket = { fg = colors.mauve }, -- Type color
+					Repeat = { fg = colors.mauve }, -- Type color
+					NonText = { fg = colors.overlay0 }, -- Comment color for non-text elements
+					TSFunction = { fg = colors.yellow }, -- Function color
+					TSNumber = { fg = colors.peach }, -- Number color
+					TSKeyword = { fg = colors.mauve }, -- Keyword color
+					TSTagDelimiter = { fg = colors.mauve }, -- Type color
+					TelescopeNormal = { fg = colors.text, bg = colors.mantle }, -- Normal colors for Telescope
+					TSConstant = { fg = colors.peach }, -- Constant color
+					TSOperator = { fg = colors.peach }, -- Operator color
+					TSConditional = { fg = colors.mauve }, -- Keyword color
+					TSType = { fg = colors.mauve }, -- Type color
+					TSNamespace = { fg = colors.mauve }, -- Type color
+					Whitespace = { fg = colors.overlay0 }, -- Comment color for whitespace
+					TSFuncMacro = { fg = colors.yellow }, -- Function color for macros
+					Operator = { fg = colors.peach }, -- Keyword color for operators
+					TSParameterReference = { fg = colors.teal }, -- Variables (parameters) in references
+					TSString = { fg = colors.green }, -- String color
+					Macro = { fg = colors.yellow }, -- Function color
+					TSFloat = { fg = colors.peach }, -- Number color for floats
+					TSRepeat = { fg = colors.mauve }, -- Keyword color for repeats
+					TSComment = { fg = colors.overlay0 }, -- Comment color
+					TSTag = { fg = colors.mauve }, -- Type color for tags
+					TSPunctSpecial = { fg = colors.overlay1 }, -- Punctuation special color
+					Conditional = { fg = colors.mauve }, -- Keyword color for conditionals
+					WilderMauve = { fg = colors.teal }, -- Wilder highlight color
+					WilderText = { fg = colors.text, bg=colors.overlay0 }, -- Wilder highlight color
+
 				}
 			end,
 			integrations = {
@@ -122,6 +187,11 @@ return {
 				notify = true,
 				neogit = true,
 			},
+			config = function()
+				vim.defer_fn(function()
+					vim.cmd.colorscheme("catppuccin") -- Set Catppuccin as the colorscheme after configuration
+				end, 0)
+			end
 		}
 	},
 	"rcarriga/nvim-notify",

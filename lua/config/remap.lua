@@ -43,3 +43,13 @@ vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
 -- movement to end and beginning of line --
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
+vim.keymap.set("v", "H", "^")
+vim.keymap.set("v", "L", "$")
+--Terminal--
+vim.keymap.set("t","<esc>", [[<C-\><C-n>]])
+vim.keymap.set("t","jj", [[<C-\><C-n>]])
+-- Window navigation from terminal
+vim.keymap.set("t","<C-h>", [[<Cmd>wincmd h<CR>]])
+vim.keymap.set("t","<C-j>", [[<Cmd>wincmd j<CR>]])
+vim.keymap.set("t","<C-k>", [[<Cmd>wincmd k<CR>]])
+vim.keymap.set("t","<C-l>", [[<Cmd>wincmd l<CR>]])

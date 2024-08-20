@@ -2,8 +2,8 @@ print("Ahoj Wraithy")
 require("config.lazy")
 require("config.highlight_on_yank")
 require("config.remap")
-vim.cmd("colorscheme catppuccin-mocha")
 	vim.opt.relativenumber = true
+vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.clipboard = "unnamedplus,unnamed"
