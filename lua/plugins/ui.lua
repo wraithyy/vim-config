@@ -114,6 +114,7 @@ return {
 					CursorLineNr = { fg = colors.teal }, -- Current line number
 
 					-- Additional highlights directly with colors based on your Lua theme example
+					WinSeparator = { fg = colors.teal }, -- Window separators
 					TSLabel = { fg = colors.mauve }, -- Type color
 					TSProperty = { fg = colors.peach }, -- Constant color
 					TSConstBuiltin = { fg = colors.peach }, -- Constant color

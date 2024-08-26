@@ -1,6 +1,7 @@
 print("Ahoj Wraithy")
 require("config.lazy")
 require("config.highlight_on_yank")
+require("config.autoroot")
 require("config.remap")
 	vim.opt.relativenumber = true
 vim.opt.termguicolors = true

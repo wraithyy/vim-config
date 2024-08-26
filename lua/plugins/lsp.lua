@@ -1,6 +1,22 @@
--- ~/.config/nvim/lua/plugins/lsp-zero-config.lua
--- ~/.config/nvim/lua/plugins/lsp-zero-config.lua
-
+local function lsp_highlight_document(client)
+	if client.server_capabilities.documentHighlightProvider then
+		vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+		vim.api.nvim_create_autocmd("CursorHold", {
+			group = "lsp_document_highlight",
+			buffer = 0,
+			callback = function()
+				vim.lsp.buf.document_highlight()
+			end,
+		})
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			group = "lsp_document_highlight",
+			buffer = 0,
+			callback = function()
+				vim.lsp.buf.clear_references()
+			end,
+		})
+	end
+end
 return {
 	{
 		'VonHeikemen/lsp-zero.nvim',
@@ -33,7 +49,7 @@ return {
 			local telescope = require("telescope.builtin")
 			local lsp_attach = function(client, bufnr)
 				local opts = { buffer = bufnr }
-
+				lsp_highlight_document(client)
 				-- Use Telescope for these LSP functions with descriptions
 				vim.keymap.set('n', 'gd', telescope.lsp_definitions,
 					{ buffer = bufnr, desc = 'Go to Definition' })
@@ -57,7 +73,8 @@ return {
 					{ buffer = bufnr, desc = 'Format Document' })
 				vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>',
 					{ buffer = bufnr, desc = 'Code Actions' })
-				vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+				vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help,
+					{ desc = "LSP: Signature Documentation", buffer = buffer_number })
 			end
 
 			lsp_zero.extend_lspconfig({

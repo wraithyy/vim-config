@@ -40,6 +40,9 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", { d
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 -- go to next buffer -- 
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
+-- delete without yank --
+vim.keymap.set("n", "<leader>dd", "\"_d", { desc = "Delete without yank" })
+vim.keymap.set("n", "<leader>pp", "\"_dP", { desc = "Paste without yank" })
 -- movement to end and beginning of line --
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")

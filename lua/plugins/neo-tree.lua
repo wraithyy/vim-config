@@ -8,11 +8,35 @@ return {
 			"MunifTanjim/nui.nvim",
 		},
 		config = function()
+			local get_path = function(state)
+				local node = state.tree:get_node()
+				if node.type == 'directory' then
+					return node.path
+				end
+				return node:get_parent_id()
+			end
+
+			local do_setcd = function(state)
+				local p = get_path(state)
+				vim.cmd(string.format('exec(":lcd %s")', p))
+				return p
+			end
 			require('neo-tree').setup({
 				close_if_last_window = true, -- Zavře neo-tree pokud je posledním oknem
 				popup_border_style = "rounded", -- Styl ohraničení pop-up oken
 				enable_git_status = true, -- Zobrazení Git statusu
 				enable_diagnostics = true, -- Zobrazení diagnostických informací
+				commands = {
+					spectre = function(state)
+						local p = do_setcd(state)
+						require('spectre').open({
+							is_insert_mode = true,
+							cwd = p,
+							is_close = false,
+						})
+						vim.cmd("Neotree close")
+					end,
+				},
 				filesystem = {
 					hijack_netrw_behavior = "open_current",
 					filtered_items = {
@@ -27,6 +51,8 @@ return {
 				window = {
 					position = "left", -- Pozice okna
 					width = 60, -- Šířka okna
+					mappings = {
+						["<leader>r"] = "spectre" }
 				},
 				buffers = {
 					follow_current_file = { enabled = true }, -- Sleduje aktuálně otevřený soubor v bufferu
