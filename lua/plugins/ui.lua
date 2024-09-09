@@ -1,64 +1,48 @@
 return {
 	{
 		'nvim-lualine/lualine.nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons' },
+		dependencies = { 'nvim-tree/nvim-web-devicons', "letieu/harpoon-lualine", "meuter/lualine-so-fancy.nvim", "NStefan002/screenkey.nvim" },
 		opts = {
 			theme = "catppuccin-mocha" },
 		config = function()
-			local harpoon = require("harpoon.mark")
-
-			local function truncate_branch_name(branch)
-				if not branch or branch == "" then
-					return ""
-				end
-
-				-- Match the branch name to the specified format
-				local user, team, ticket_number = string.match(branch, "^(%w+)/(%w+)%-(%d+)")
-
-				-- If the branch name matches the format, display {user}/{team}-{ticket_number}, otherwise display the full branch name
-				if ticket_number then
-					return user .. "/" .. team .. "-" .. ticket_number
-				else
-					return branch
-				end
-			end
-
-			local function harpoon_component()
-				local total_marks = harpoon.get_length()
-
-				if total_marks == 0 then
-					return ""
-				end
-
-				local current_mark = "—"
-
-				local mark_idx = harpoon.get_current_index()
-				if mark_idx ~= nil then
-					current_mark = tostring(mark_idx)
-				end
-
-				return string.format("󱡅 %s/%d", current_mark, total_marks)
-			end
-
+			vim.g.screenkey_statusline_component = true
 			require("lualine").setup({
 				options = {
-					theme = "catppuccin",
+					theme = "catppuccin-mocha",
 					globalstatus = true,
-					component_separators = { left = "", right = "" },
+					always_divide_middle = false,
 					section_separators = { left = "█", right = "█" },
+					component_separators = { left = "|", right = "|" },
 				},
 				sections = {
+					lualine_a = {
+						{ "fancy_mode", width = 8 }
+					},
 					lualine_b = {
-						{ "branch", icon = "", fmt = truncate_branch_name },
-						harpoon_component,
-						"diff",
-						"diagnostics",
+						{ "fancy_branch" },
+						{ "harpoon2", active_indicators = { "󰬑", "󰬒", "󰬓", "󰬜" }, indicators = { "󰰆", "󰰉", "󰰌", "󰰧" } }
 					},
 					lualine_c = {
-						{ "filename", path = 1 },
+						{ "fancy_diff" },
+						{ "fancy_diagnostics" },
 					},
 					lualine_x = {
-						"filetype",
+
+						function()
+							return require("screenkey").get_keys()
+						end,
+						{ "fancy_macro" },
+						{ "fancy_searchcount" },
+					},
+					lualine_y = {
+
+						{ require('NeoComposer.ui').status_recording },
+						{ "fancy_filetype", ts_icon = "" },
+						{ "fancy_cwd", substitute_home = true },
+					},
+					lualine_z = {
+						{ "fancy_lsp_servers" },
+						{ "fancy_location" },
 					},
 				},
 			})
@@ -118,7 +102,7 @@ return {
 					TSLabel = { fg = colors.mauve }, -- Type color
 					TSProperty = { fg = colors.peach }, -- Constant color
 					TSConstBuiltin = { fg = colors.peach }, -- Constant color
-					Folded = { fg = colors.overlay0}, -- Comment color for folded text
+					Folded = { fg = colors.overlay0 }, -- Comment color for folded text
 					TSField = { fg = colors.teal }, -- Field names as variables
 					TSPunctBracket = { fg = colors.mauve }, -- Type color
 					Repeat = { fg = colors.mauve }, -- Type color
@@ -146,7 +130,8 @@ return {
 					TSPunctSpecial = { fg = colors.overlay1 }, -- Punctuation special color
 					Conditional = { fg = colors.mauve }, -- Keyword color for conditionals
 					WilderMauve = { fg = colors.teal }, -- Wilder highlight color
-					WilderText = { fg = colors.text, bg=colors.overlay0 }, -- Wilder highlight color
+					WilderText = { fg = colors.text, bg = colors.overlay0 }, -- Wilder highlight color
+					WhichKeyValue = { fg = colors.peach }, -- WhichKey description color
 
 				}
 			end,
@@ -162,8 +147,10 @@ return {
 				diffview = true,
 				window_picker = true,
 				neotree = true,
+				leap = true,
 				harpoon = true,
 				mason = true,
+				noice = true,
 				native_lsp = {
 					enabled = true,
 					virtual_text = {

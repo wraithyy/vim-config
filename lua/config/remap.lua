@@ -4,7 +4,7 @@ vim.keymap.set("n", "<leader>pv", function () vim.cmd("Neotree position=current 
 	
 vim.api.nvim_set_keymap('n', '<leader>.', '<cmd>lua vim.lsp.buf.code_action()<CR>',
 	{ desc = "Code Action", noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>,', '<cmd>lua vim.diagnostic.open_float()<CR>',
 	{ desc = "Show Problems", noremap = true, silent = true })
 vim.keymap.set('n', '<space>', '<nop>')
 -- Number remaps --
@@ -29,9 +29,9 @@ vim.keymap.set("n", "<leader>j", vim.lsp.buf.format, { desc = "Format Document" 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Move page down and center --
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
+--vim.keymap.set("n", "<C-d>", "<C-d>zz")
 -- Move page up and center --
-vim.keymap.set("n", "<C-u>", "<C-u>zz") 
+--vim.keymap.set("n", "<C-u>", "<C-u>zz") 
 -- ctrl c to excape --
 vim.keymap.set("i", "<C-c>", "<Esc>")
 -- make it rain --
@@ -56,3 +56,4 @@ vim.keymap.set("t","<C-h>", [[<Cmd>wincmd h<CR>]])
 vim.keymap.set("t","<C-j>", [[<Cmd>wincmd j<CR>]])
 vim.keymap.set("t","<C-k>", [[<Cmd>wincmd k<CR>]])
 vim.keymap.set("t","<C-l>", [[<Cmd>wincmd l<CR>]])
+vim.api.nvim_set_keymap('n', '§', '`', { noremap = true, silent = true })

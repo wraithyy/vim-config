@@ -19,8 +19,8 @@ return {
 			-- Nastavení nvim-notify jako výchozího pro notifikace
 			vim.notify = require("notify")
 		end
-	},
-	{
+	}
+--[[	{
 		"mrded/nvim-lsp-notify",
 		dependencies = {
 			"rcarriga/nvim-notify",
@@ -30,4 +30,5 @@ return {
 			})
 		end
 	}
+	]]--
 }

@@ -37,7 +37,7 @@ return {
 
 			-- Snippets
 			{ 'L3MON4D3/LuaSnip' }, -- Required
-
+			{'marilari88/twoslash-queries.nvim'},
 			-- Telescope for fuzzy finding
 			{ 'nvim-telescope/telescope.nvim',    dependencies = { 'nvim-lua/plenary.nvim' } },
 		},
@@ -48,6 +48,7 @@ return {
 			-- Ensure telescope is loaded before setting keymaps
 			local telescope = require("telescope.builtin")
 			local lsp_attach = function(client, bufnr)
+				require("twoslash-queries").attach(client, bufnr)
 				local opts = { buffer = bufnr }
 				lsp_highlight_document(client)
 				-- Use Telescope for these LSP functions with descriptions
@@ -83,11 +84,13 @@ return {
 				float_border = 'rounded',
 				capabilities = require('cmp_nvim_lsp').default_capabilities(),
 			})
-
 			require('mason').setup({})
 			require('mason-lspconfig').setup({
 				handlers = {
 					function(server_name)
+						if server_name == "tsserver" then
+							server_name = "ts_ls"
+						end
 						require('lspconfig')[server_name].setup({})
 					end,
 				}
