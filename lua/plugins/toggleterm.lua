@@ -33,14 +33,14 @@ return {
 			-- Keybinding to toggle terminal window
 			vim.api.nvim_set_keymap(
 				'n',
-				'<C-ú>', -- Adjust this keybinding to your preference
+				'<C-t>', -- Adjust this keybinding to your preference
 				'<cmd>ToggleTerm<CR>',
 				{ noremap = true, silent = true, desc = 'Toggle terminal window' }
 			)
 
 			vim.api.nvim_set_keymap(
 				't',
-				'<C-ú>', -- Same keybinding for terminal mode
+				'<C-t>', -- Same keybinding for terminal mode
 				'<cmd>ToggleTerm<CR>',
 				{ noremap = true, silent = true, desc = 'Toggle terminal window' }
 			)

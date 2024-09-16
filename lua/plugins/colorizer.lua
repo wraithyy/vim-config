@@ -19,6 +19,6 @@ return {
 		})
 
 		-- Optional: Keybinding to toggle Colorizer
-		vim.api.nvim_set_keymap('n', '<leader>c', ':ColorizerToggle<CR>', { noremap = true, silent = true })
+		vim.api.nvim_set_keymap('n', '<leader>cc', ':ColorizerToggle<CR>', { noremap = true, silent = true })
 	end
 }

@@ -4,28 +4,7 @@ return {
 		dependencies = { 'nvim-lua/plenary.nvim' }, -- Závislost, která je vyžadována
 		config = function()
 			require('gitsigns').setup({
-				signs                   = {
-					add          = { text = '┃' },
-					change       = { text = '┃' },
-					delete       = { text = '_' },
-					topdelete    = { text = '‾' },
-					changedelete = { text = '~' },
-					untracked    = { text = '┆' },
-				},
-				signcolumn              = true, -- Zobrazení gitsigns ve sloupci se značkami
-				sign_priority           = 100,
-				numhl                   = false, -- Povolit/zakázat zvýraznění čísla řádku
-				linehl                  = false, -- Povolit/zakázat zvýraznění celého řádku
-				watch_gitdir            = {
-					interval = 1000,
-				},
-				current_line_blame      = true, -- Zobrazit blame na aktuálním řádku
-				current_line_blame_opts = {
-					delay = 1000,
-				},
-				update_debounce         = 100,
-				status_formatter        = nil, -- Můžete přizpůsobit formátování stavu
-				max_file_length         = 40000, -- Maximální délka souboru pro zobrazení gitsigns
+				current_line_blame = true,
 			})
 			vim.api.nvim_set_keymap('n', '<leader>hs', ':Gitsigns stage_hunk<CR>',
 				{ noremap = true, silent = true, desc = "Stage Hunk" })

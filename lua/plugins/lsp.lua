@@ -18,7 +18,7 @@ local function lsp_highlight_document(client)
 	end
 end
 return {
-	{
+	{ 
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v4.x',
 		dependencies = {
@@ -26,7 +26,6 @@ return {
 			{ 'neovim/nvim-lspconfig' }, -- Required
 			{ 'williamboman/mason.nvim' }, -- Optional
 			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
-
 			-- Autocompletion
 			{ 'hrsh7th/nvim-cmp' }, -- Required
 			{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
@@ -123,7 +122,7 @@ return {
 					['<Enter>'] = cmp.mapping.confirm({ select = true }),
 
 					-- Trigger completion menu
-					['<C-S-Space>'] = cmp.mapping.complete(),
+					['<C-c>'] = cmp.mapping.complete(),
 
 					-- Scroll up and down the documentation window
 					['<C-u>'] = cmp.mapping.scroll_docs(-4),

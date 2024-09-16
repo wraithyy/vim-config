@@ -11,14 +11,26 @@ return {
 			filter_rules = {
 				-- Nezahrnovat některá okna
 				bo = {
-					filetype = { 'aerial', 'qf' }, -- Vyloučení specifických typů oken
-					buftype = { 'nofile' }, -- Vyloučení terminálů a dočasných bufferů
+					filetype = { 'NvimTree', 'notify', 'aerial', 'Outline', 'Trouble' },
+					--buftype = { 'nofile' },
+					buftype = {},
 				},
 			},
 			other_win_hl_color = '#e35e4f',
 		})
-		vim.api.nvim_set_keymap('n', '<leader>w',
-			'<cmd>lua vim.api.nvim_set_current_win(require("window-picker").pick_window())<CR>',
-			{ noremap = true, silent = true, desc = "Pick window" })
+		local function pick_window()
+			local picked_window = require("window-picker").pick_window()
+			if picked_window then
+				vim.api.nvim_set_current_win(picked_window)
+			end
+		end
+		vim.keymap.set('n', '<leader>w', pick_window, {
+			noremap = true,
+			silent = true,
+			desc = "Pick window",
+		})
+		--		vim.api.nvim_set_keymap('n', '<leader>w',
+		--			'<cmd>lua vim.api.nvim_set_current_win(require("window-picker").pick_window())<CR>',
+		--			{ noremap = true, silent = true, desc = "Pick window" })
 	end
 }
