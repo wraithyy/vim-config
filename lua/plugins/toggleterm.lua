@@ -31,14 +31,14 @@ return {
 				},
 			})
 			-- Keybinding to toggle terminal window
-			vim.api.nvim_set_keymap(
+			vim.keymap.set(
 				'n',
 				'<C-t>', -- Adjust this keybinding to your preference
 				'<cmd>ToggleTerm<CR>',
 				{ noremap = true, silent = true, desc = 'Toggle terminal window' }
 			)
 
-			vim.api.nvim_set_keymap(
+			vim.keymap.set(
 				't',
 				'<C-t>', -- Same keybinding for terminal mode
 				'<cmd>ToggleTerm<CR>',
@@ -89,7 +89,7 @@ return {
 			})
 
 			-- Keybinding to open the Terminal Manager
-			vim.api.nvim_set_keymap(
+			vim.keymap.set(
 				'n',
 				'<leader>tt',
 				'<cmd>Telescope toggleterm_manager initial_mode=normal<CR>',

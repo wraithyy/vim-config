@@ -29,7 +29,7 @@ return {
 			silent = true,
 			desc = "Pick window",
 		})
-		--		vim.api.nvim_set_keymap('n', '<leader>w',
+		--		vim.keymap.set('n', '<leader>w',
 		--			'<cmd>lua vim.api.nvim_set_current_win(require("window-picker").pick_window())<CR>',
 		--			{ noremap = true, silent = true, desc = "Pick window" })
 	end

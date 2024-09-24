@@ -76,11 +76,11 @@ return {
 			end
 
 			-- Klávesové zkratky pro rychlé otevření/uzavření neo-tree
-			vim.api.nvim_set_keymap('n', '<leader>et', ':Neotree toggle<CR>',
+			vim.keymap.set('n', '<leader>et', ':Neotree toggle<CR>',
 				{ noremap = true, silent = true, desc = "Toggle files" })
-			vim.api.nvim_set_keymap('n', '<leader>ee', ':lua FocusOrOpenNeoTree()<CR>',
+			vim.keymap.set('n', '<leader>ee', ':lua FocusOrOpenNeoTree()<CR>',
 				{ noremap = true, silent = true, desc = "Focus Neo-Tree sidebar" })
-			vim.api.nvim_set_keymap('n', '<leader>gs', ':Neotree float git_status<CR>',
+			vim.keymap.set('n', '<leader>gs', ':Neotree float git_status<CR>',
 				{ noremap = true, silent = true, desc = "Git status" })
 		end
 	}

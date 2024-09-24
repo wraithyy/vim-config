@@ -12,7 +12,7 @@ return {
       })
 
       -- Keybinding to open Telescope for nx actions
-      vim.api.nvim_set_keymap(
+      vim.keymap.set(
         'n',
         '<leader>nx',
         '<cmd>Telescope nx actions<CR>',

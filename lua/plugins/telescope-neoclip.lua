@@ -46,7 +46,7 @@ return {
 
 			-- Příkaz pro zobrazení historie v Teleskope
 			require('telescope').load_extension('neoclip')
-			vim.api.nvim_set_keymap('n', '<leader>fc', '<cmd>Telescope neoclip<CR>',
+			vim.keymap.set('n', '<leader>fc', '<cmd>Telescope neoclip<CR>',
 				{ noremap = true, silent = true, desc = "Open Neoclip" })
 		end
 	},

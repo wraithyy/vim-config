@@ -11,8 +11,8 @@ return {
 					theme = "catppuccin-mocha",
 					globalstatus = true,
 					always_divide_middle = false,
-					section_separators = { left = "█", right = "█" },
-					component_separators = { left = "|", right = "|" },
+					section_separators = { left = "█▒", right = "▒█" },
+					component_separators = { left = "󱋱", right = "󱋱" },
 				},
 				sections = {
 					lualine_a = {
@@ -20,7 +20,7 @@ return {
 					},
 					lualine_b = {
 						{ "fancy_branch" },
-						{ "harpoon2", active_indicators = { "󰬑", "󰬒", "󰬓", "󰬜" }, indicators = { "󰰆", "󰰉", "󰰌", "󰰧" } }
+						{ "harpoon2", active_indicators = { "󰬏", "󰬑", "󰬒", "󰬓", }, indicators = { "󰰀", "󰰆", "󰰉", "󰰌", } }
 					},
 					lualine_c = {
 						{ "fancy_diff" },

@@ -6,13 +6,13 @@ return {
 			require('gitsigns').setup({
 				current_line_blame = true,
 			})
-			vim.api.nvim_set_keymap('n', '<leader>hs', ':Gitsigns stage_hunk<CR>',
+			vim.keymap.set('n', '<leader>hs', ':Gitsigns stage_hunk<CR>',
 				{ noremap = true, silent = true, desc = "Stage Hunk" })
-			vim.api.nvim_set_keymap('n', '<leader>hr', ':Gitsigns reset_hunk<CR>',
+			vim.keymap.set('n', '<leader>hr', ':Gitsigns reset_hunk<CR>',
 				{ noremap = true, silent = true, desc = "Reset Hunk" })
-			vim.api.nvim_set_keymap('n', '<leader>hb', ':Gitsigns blame_line<CR>',
+			vim.keymap.set('n', '<leader>hb', ':Gitsigns blame_line<CR>',
 				{ noremap = true, silent = true, desc = "Blame Line" })
-			vim.api.nvim_set_keymap('n', '<leader>hp', ':Gitsigns preview_hunk<CR>',
+			vim.keymap.set('n', '<leader>hp', ':Gitsigns preview_hunk<CR>',
 				{ noremap = true, silent = true, desc = "Preview Hunk" })
 		end,
 	},
