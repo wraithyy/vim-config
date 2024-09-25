@@ -6,12 +6,12 @@ return {
 			chunk = {
 				enable = true,
 				duration = 150,
-				style = "#80a0b5"
+				style = "#80a0b5",
 			},
 			indent = {
-				enable = true
-				-- ...
-			}
+				enable = true,
+				style = "#212121",
+			},
 		})
-	end
+	end,
 }

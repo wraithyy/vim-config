@@ -3,7 +3,7 @@ local function lsp_highlight_document(client)
 		vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
 		vim.api.nvim_create_autocmd("CursorHold", {
 			group = "lsp_document_highlight",
-			buffer = 0,
+
 			callback = function()
 				vim.lsp.buf.document_highlight()
 			end,
@@ -33,7 +33,7 @@ return {
 			{ "hrsh7th/cmp-path" }, -- Optional
 			{ "saadparwaiz1/cmp_luasnip" }, -- Optional
 			{ "rafamadriz/friendly-snippets" }, -- Optional
-
+			{ "onsails/lspkind.nvim" },
 			-- Snippets
 			{ "L3MON4D3/LuaSnip" }, -- Required
 			{ "marilari88/twoslash-queries.nvim" },
@@ -43,12 +43,10 @@ return {
 		config = function()
 			-- Setup lsp-zero
 			local lsp_zero = require("lsp-zero")
-
 			-- Ensure telescope is loaded before setting keymaps
 			local telescope = require("telescope.builtin")
 			local lsp_attach = function(client, bufnr)
 				require("twoslash-queries").attach(client, bufnr)
-				local opts = { buffer = bufnr }
 				lsp_highlight_document(client)
 				-- Use Telescope for these LSP functions with descriptions
 				vim.keymap.set("n", "gd", telescope.lsp_definitions, { buffer = bufnr, desc = "Go to Definition" })
@@ -68,12 +66,7 @@ return {
 				vim.keymap.set("n", "gs", telescope.lsp_document_symbols, { buffer = bufnr, desc = "Document Symbols" })
 
 				-- Standard LSP keymaps with descriptions
-				vim.keymap.set(
-					"n",
-					"K",
-					"<cmd>lua vim.lsp.buf.hover()<cr>",
-					{ buffer = bufnr, desc = "Hover Documentation" }
-				)
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover Documentation" })
 				vim.keymap.set(
 					"n",
 					"gD",
@@ -109,8 +102,12 @@ return {
 			lsp_zero.extend_lspconfig({
 				sign_text = true,
 				lsp_attach = lsp_attach,
-				float_border = "rounded",
+
 				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
+
+			lsp_zero.ui({
+				border = "rounded",
 			})
 			require("mason").setup({})
 			require("mason-lspconfig").setup({
@@ -129,10 +126,11 @@ return {
 
 			-- Load additional snippets
 			require("luasnip.loaders.from_vscode").lazy_load()
-
+			local lsp_kind = require("lspkind")
 			cmp.setup({
 				sources = {
 					{ name = "path" },
+					{ name = "codeium" },
 					{ name = "nvim_lsp" },
 					{ name = "luasnip", keyword_length = 2 },
 					{ name = "buffer", keyword_length = 3 },
@@ -161,8 +159,21 @@ return {
 					["<C-f>"] = cmp_action.luasnip_jump_forward(),
 					["<C-b>"] = cmp_action.luasnip_jump_backward(),
 				}),
-				formatting = lsp_zero.cmp_format({ details = true }),
+				formatting = {
+					format = lsp_kind.cmp_format({
+						mode = "symbol_text", -- show only symbol annotations
+						maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+						-- can also be a function to dynamically calculate max width such as
+						-- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+						ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+						show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+						-- The function below will be called before any actual modifications from lspkind
+						-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+					}),
+				},
 			})
+			
 		end,
 	},
 }
