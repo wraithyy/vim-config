@@ -1,9 +1,15 @@
 return {
 	{
-		'nvim-lualine/lualine.nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons', "letieu/harpoon-lualine", "meuter/lualine-so-fancy.nvim", "NStefan002/screenkey.nvim" },
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+			"letieu/harpoon-lualine",
+			"meuter/lualine-so-fancy.nvim",
+			"NStefan002/screenkey.nvim",
+		},
 		opts = {
-			theme = "catppuccin-mocha" },
+			theme = "catppuccin-mocha",
+		},
 		config = function()
 			vim.g.screenkey_statusline_component = true
 			require("lualine").setup({
@@ -16,11 +22,15 @@ return {
 				},
 				sections = {
 					lualine_a = {
-						{ "fancy_mode", width = 8 }
+						{ "fancy_mode", width = 8 },
 					},
 					lualine_b = {
 						{ "fancy_branch" },
-						{ "harpoon2", active_indicators = { "󰬏", "󰬑", "󰬒", "󰬓", }, indicators = { "󰰀", "󰰆", "󰰉", "󰰌", } }
+						{
+							"harpoon2",
+							active_indicators = { "󰬏", "󰬑", "󰬒", "󰬓" },
+							indicators = { "󰰀", "󰰆", "󰰉", "󰰌" },
+						},
 					},
 					lualine_c = {
 						{ "fancy_diff" },
@@ -40,33 +50,33 @@ return {
 						{ "fancy_cwd", substitute_home = true },
 						{
 							function()
-								local status = require('neocodeium').get_status()
+								local status = require("neocodeium").get_status()
 								if status == 0 then
-									return '󰘦' -- Ikona pro Enabled (zapnuto)
+									return "󰘦" -- Ikona pro Enabled (zapnuto)
 								elseif status == 1 then
-									return '' -- Ikona pro Globally Disabled
+									return "" -- Ikona pro Globally Disabled
 								elseif status == 2 then
-									return '󰓛' -- Ikona pro Buffer Disabled
+									return "󰓛" -- Ikona pro Buffer Disabled
 								elseif status == 3 or status == 4 then
-									return '' -- Ikona pro Filetype Disabled nebo options.enabled = false
+									return "" -- Ikona pro Filetype Disabled nebo options.enabled = false
 								elseif status == 5 then
-									return '⚠️' -- Ikona pro Wrong Encoding
+									return "⚠️" -- Ikona pro Wrong Encoding
 								else
-									return '' -- Prázdné, pokud není k dispozici status
+									return "" -- Prázdné, pokud není k dispozici status
 								end
 							end,
 							color = function()
-								local status = require('neocodeium').get_status()
+								local status = require("neocodeium").get_status()
 								if status == 0 then
-									return { fg = '#00FF00', gui = 'bold' } -- Zelená pro Enabled
+									return { fg = "#00FF00", gui = "bold" } -- Zelená pro Enabled
 								elseif status == 1 then
-									return { fg = '#FF0000', gui = 'bold' } -- Červená pro Globally Disabled
+									return { fg = "#FF0000", gui = "bold" } -- Červená pro Globally Disabled
 								elseif status == 2 then
-									return { fg = '#FF4500', gui = 'bold' } -- Oranžová pro Buffer Disabled
+									return { fg = "#FF4500", gui = "bold" } -- Oranžová pro Buffer Disabled
 								elseif status == 5 then
-									return { fg = '#FFD700', gui = 'bold' } -- Žlutá pro Wrong Encoding
+									return { fg = "#FFD700", gui = "bold" } -- Žlutá pro Wrong Encoding
 								else
-									return { fg = '#FFFFFF', gui = 'bold' } -- Defaultní barva pro ostatní stavy
+									return { fg = "#FFFFFF", gui = "bold" } -- Defaultní barva pro ostatní stavy
 								end
 							end,
 						},
@@ -123,10 +133,10 @@ return {
 					["@tag"] = { fg = colors.peach }, -- Tag names
 					["@tag.attribute.tsx"] = { fg = colors.yellow }, -- Tag names
 
-
 					-- Line numbers
 					LineNr = { fg = colors.teal }, -- Regular line numbers
 					CursorLineNr = { fg = colors.teal }, -- Current line number
+					MarkSignHL = { fg = colors.yellow },
 
 					-- Additional highlights directly with colors based on your Lua theme example
 					WinSeparator = { fg = colors.teal }, -- Window separators
@@ -165,7 +175,6 @@ return {
 					WilderMauve = { fg = colors.teal }, -- Wilder highlight color
 					WilderText = { fg = colors.text, bg = colors.overlay0 }, -- Wilder highlight color
 					WhichKeyValue = { fg = colors.peach }, -- WhichKey description color
-
 				}
 			end,
 			integrations = {
@@ -214,8 +223,8 @@ return {
 				vim.defer_fn(function()
 					vim.cmd.colorscheme("catppuccin") -- Set Catppuccin as the colorscheme after configuration
 				end, 0)
-			end
-		}
+			end,
+		},
 	},
 	"rcarriga/nvim-notify",
 }

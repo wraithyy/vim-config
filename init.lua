@@ -4,7 +4,7 @@ require("config.highlight_on_yank")
 require("config.autoroot")
 require("config.remap")
 require("config.diagnostics-design")
-	vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.cursorline = true
@@ -22,5 +22,3 @@ vim.opt.guicursor = {
 	"a:blinkwait700-blinkoff400-blinkon250", -- All modes: blinking settings
 	"sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch: block cursor with specific blinking settings
 }
-
-

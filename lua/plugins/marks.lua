@@ -2,14 +2,14 @@ return {
 	{
 		"chentoast/marks.nvim",
 		config = function()
-			require('marks').setup({
+			require("marks").setup({
 				default_mappings = false, -- Disable default mappings
 				builtin_marks = { ".", "<", ">", "^" }, -- Track specific built-in marks
-				cyclic = true,  -- Cycle through marks
+				cyclic = true, -- Cycle through marks
 				force_write_shada = false,
 				refresh_interval = 250,
 				sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-				excluded_filetypes = { "help", "dashboard" }, -- Ignore specific file types
+				excluded_filetypes = { "help", "dashboard", "alpha" }, -- Ignore specific file types
 				bookmark_0 = {
 					sign = "⚑",
 					virt_text = "Bookmark",
@@ -28,5 +28,5 @@ return {
 				},
 			})
 		end,
-	}
+	},
 }
