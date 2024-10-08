@@ -1,3 +1,4 @@
+require("which-key").add({ { "<leader>a", desc = "Toggle auto-save", icon = "" } })
 return {
 	"okuuva/auto-save.nvim",
 	cmd = "ASToggle", -- optional for lazy loading on command

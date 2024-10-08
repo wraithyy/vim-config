@@ -38,9 +38,6 @@ return {
 					},
 					lualine_x = {
 
-						function()
-							return require("screenkey").get_keys()
-						end,
 						{ "fancy_macro" },
 						{ "fancy_searchcount" },
 					},
@@ -90,6 +87,20 @@ return {
 		end,
 	},
 	{
+		"echasnovski/mini.icons",
+		opts = {},
+		lazy = true,
+		specs = {
+			{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+		},
+		init = function()
+			package.preload["nvim-web-devicons"] = function()
+				require("mini.icons").mock_nvim_web_devicons()
+				return package.loaded["nvim-web-devicons"]
+			end
+		end,
+	},
+	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
@@ -132,7 +143,8 @@ return {
 					Special = { fg = colors.peach }, -- Special characters
 					["@tag"] = { fg = colors.peach }, -- Tag names
 					["@tag.attribute.tsx"] = { fg = colors.yellow }, -- Tag names
-
+					["@type.builtin.tsx"] = { fg = "#c5dEc9" }, -- Tag names
+					["@lsp.type.interface"] = { fg = "#ffb1ad" }, -- Tag names
 					-- Line numbers
 					LineNr = { fg = colors.teal }, -- Regular line numbers
 					CursorLineNr = { fg = colors.teal }, -- Current line number
@@ -175,6 +187,7 @@ return {
 					WilderMauve = { fg = colors.teal }, -- Wilder highlight color
 					WilderText = { fg = colors.text, bg = colors.overlay0 }, -- Wilder highlight color
 					WhichKeyValue = { fg = colors.peach }, -- WhichKey description color
+					NeoTreeIndentMarker = { fg = "#303039" },
 				}
 			end,
 			integrations = {

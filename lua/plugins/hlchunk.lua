@@ -10,7 +10,8 @@ return {
 			},
 			indent = {
 				enable = true,
-				style = "#212121",
+				chars = { " " },
+				style = { { bg = "#303039" } },
 			},
 		})
 	end,

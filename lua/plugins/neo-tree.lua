@@ -1,3 +1,8 @@
+require("which-key").add({
+	{ "<leader>e", desc = "NeoTree", icon = "" },
+	{ "<leader>ee", desc = "Open/focus Neotree", icon = { icon = "󱞊", color = "green" } },
+	{ "<leader>et", desc = "Toggle Neotree", icon = "" },
+})
 return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -10,7 +15,7 @@ return {
 		config = function()
 			local get_path = function(state)
 				local node = state.tree:get_node()
-				if node.type == 'directory' then
+				if node.type == "directory" then
 					return node.path
 				end
 				return node:get_parent_id()
@@ -21,7 +26,7 @@ return {
 				vim.cmd(string.format('exec(":lcd %s")', p))
 				return p
 			end
-			require('neo-tree').setup({
+			require("neo-tree").setup({
 				close_if_last_window = true, -- Zavře neo-tree pokud je posledním oknem
 				popup_border_style = "rounded", -- Styl ohraničení pop-up oken
 				enable_git_status = true, -- Zobrazení Git statusu
@@ -29,7 +34,7 @@ return {
 				commands = {
 					spectre = function(state)
 						local p = do_setcd(state)
-						require('spectre').open({
+						require("spectre").open({
 							is_insert_mode = true,
 							cwd = p,
 							is_close = false,
@@ -50,9 +55,10 @@ return {
 				},
 				window = {
 					position = "left", -- Pozice okna
-					width = 60, -- Šířka okna
+					width = 50, -- Šířka okna
 					mappings = {
-						["<leader>r"] = "spectre" }
+						["<leader>r"] = "spectre",
+					},
 				},
 				buffers = {
 					follow_current_file = { enabled = true }, -- Sleduje aktuálně otevřený soubor v bufferu
@@ -60,7 +66,7 @@ return {
 				git_status = {
 					window = {
 						position = "float",
-					}
+					},
 				},
 			})
 			function FocusOrOpenNeoTree()
@@ -76,12 +82,24 @@ return {
 			end
 
 			-- Klávesové zkratky pro rychlé otevření/uzavření neo-tree
-			vim.keymap.set('n', '<leader>et', ':Neotree toggle<CR>',
-				{ noremap = true, silent = true, desc = "Toggle files" })
-			vim.keymap.set('n', '<leader>ee', ':lua FocusOrOpenNeoTree()<CR>',
-				{ noremap = true, silent = true, desc = "Focus Neo-Tree sidebar" })
-			vim.keymap.set('n', '<leader>gs', ':Neotree float git_status<CR>',
-				{ noremap = true, silent = true, desc = "Git status" })
-		end
-	}
+			vim.keymap.set(
+				"n",
+				"<leader>et",
+				":Neotree toggle<CR>",
+				{ noremap = true, silent = true, desc = "Toggle files" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>ee",
+				":lua FocusOrOpenNeoTree()<CR>",
+				{ noremap = true, silent = true, desc = "Focus Neo-Tree sidebar" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>gs",
+				":Neotree float git_status<CR>",
+				{ noremap = true, silent = true, desc = "Git status" }
+			)
+		end,
+	},
 }

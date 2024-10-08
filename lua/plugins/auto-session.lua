@@ -1,14 +1,21 @@
+require("which-key").add({
+	{ "<leader>s", desc = "Session", icon = "" },
+	{ "<leader>sr", desc = "Session search", icon = "" },
+
+	{ "<leader>ss", desc = "Save session", icon = "" },
+	{ "<leader>sa", desc = "Toggle autosave", icon = "" },
+})
 return {
-	'rmagatti/auto-session',
+	"rmagatti/auto-session",
 	lazy = false,
 	dependencies = {
-		'nvim-telescope/telescope.nvim',
+		"nvim-telescope/telescope.nvim",
 	},
 	keys = {
 		-- Will use Telescope if installed or a vim.ui.select picker otherwise
-		{ '<leader>sr', '<cmd>SessionSearch<CR>',         desc = 'Session search' },
-		{ '<leader>ss', '<cmd>SessionSave<CR>',           desc = 'Save session' },
-		{ '<leader>sa', '<cmd>SessionToggleAutoSave<CR>', desc = 'Toggle autosave' },
+		{ "<leader>sr", "<cmd>SessionSearch<CR>", desc = "Session search" },
+		{ "<leader>ss", "<cmd>SessionSave<CR>", desc = "Save session" },
+		{ "<leader>sa", "<cmd>SessionToggleAutoSave<CR>", desc = "Toggle autosave" },
 	},
 
 	---enables autocomplete for opts
@@ -17,7 +24,7 @@ return {
 	opts = {
 		-- ⚠️ This will only work if Telescope.nvim is installed
 		-- The following are already the default values, no need to provide them if these are already the settings you want.
-		bypass_save_filetypes = { 'alpha', 'dashboard' },
+		bypass_save_filetypes = { "alpha", "dashboard" },
 		session_lens = {
 			-- If load_on_setup is false, make sure you use `:SessionSearch` to open the picker as it will initialize everything first
 			load_on_setup = true,
@@ -26,7 +33,6 @@ return {
 				-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
 				delete_session = { "i", "<C-D>" },
 				alternate_session = { "i", "<C-S>" },
-
 			},
 			-- Can also set some Telescope picker options
 			theme_conf = {
@@ -37,5 +43,5 @@ return {
 				-- },
 			},
 		},
-	}
+	},
 }

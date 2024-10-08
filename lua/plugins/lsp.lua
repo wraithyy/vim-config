@@ -39,6 +39,7 @@ return {
 			{ "marilari88/twoslash-queries.nvim" },
 			-- Telescope for fuzzy finding
 			{ "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+			{ "ray-x/lsp_signature.nvim" },
 		},
 		config = function()
 			-- Setup lsp-zero
@@ -47,6 +48,12 @@ return {
 			local telescope = require("telescope.builtin")
 			local lsp_attach = function(client, bufnr)
 				require("twoslash-queries").attach(client, bufnr)
+				require("lsp_signature").on_attach({
+					bind = true,
+					handler_opts = {
+						border = "rounded",
+					},
+				}, bufnr)
 				lsp_highlight_document(client)
 				-- Use Telescope for these LSP functions with descriptions
 				vim.keymap.set("n", "gd", telescope.lsp_definitions, { buffer = bufnr, desc = "Go to Definition" })
@@ -97,6 +104,9 @@ return {
 					vim.lsp.buf.signature_help,
 					{ desc = "LSP: Signature Documentation", buffer = buffer_number }
 				)
+				vim.keymap.set({ "n" }, "<Leader>k", function()
+					vim.lsp.buf.signature_help()
+				end, { silent = true, noremap = true, desc = "toggle signature" })
 			end
 
 			lsp_zero.extend_lspconfig({

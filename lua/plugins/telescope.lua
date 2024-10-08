@@ -1,3 +1,14 @@
+require("which-key").add({
+	{ "<leader>f", desc = "Telescope", icon = "" },
+	{ "<leader>ff", desc = "Find files", icon = "" },
+	{ "<leader>fb", desc = "Find buffers", icon = "" },
+	{ "<leader>fh", desc = "Find help", icon = "" },
+	{ "<leader>fg", desc = "Find text in files", icon = "" },
+	{ "<leader>fm", desc = "Find marks", icon = "" },
+	{ "<leader>fp", desc = "Find project", icon = "" },
+	{ "<leader>fx", desc = "Find treesitter symbols", icon = "󱔁" },
+	{ "<leader>ft", desc = "Open Terminal Manager", icon = "" },
+})
 return {
 	"nvim-telescope/telescope.nvim",
 	tag = "0.1.8",
@@ -14,7 +25,9 @@ return {
 				builtin.find_files()
 			end
 		end
-		vim.keymap.set("n", "<leader>ff", project_files, { desc = "Find files" })
+		vim.keymap.set("n", "<leader>ff", function()
+			require("telescope").extensions.smart_open.smart_open()
+		end, { desc = "Find files" })
 		vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
 		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help" })
 		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find text in files" })

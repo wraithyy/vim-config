@@ -1,3 +1,9 @@
+require("which-key").add({
+	{ "<leader>h", desc = "Harpoon", icon = "" },
+	{ "<leader>ha", desc = "Harpoon", icon = { icon = "", color = "green" } },
+	{ "<leader>ho", desc = "Harpoon menu", icon = "󰮫" },
+	{ "<leader>hc", desc = "Harpoon clear", icon = { icon = "", color = "red" } },
+})
 return {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
