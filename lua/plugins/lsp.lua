@@ -31,6 +31,7 @@ return {
 			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
 			{ "hrsh7th/cmp-buffer" }, -- Optional
 			{ "hrsh7th/cmp-path" }, -- Optional
+			{ "hrsh7th/cmp-cmdline" },
 			{ "saadparwaiz1/cmp_luasnip" }, -- Optional
 			{ "rafamadriz/friendly-snippets" }, -- Optional
 			{ "onsails/lspkind.nvim" },
@@ -104,9 +105,6 @@ return {
 					vim.lsp.buf.signature_help,
 					{ desc = "LSP: Signature Documentation", buffer = buffer_number }
 				)
-				vim.keymap.set({ "n" }, "<Leader>k", function()
-					vim.lsp.buf.signature_help()
-				end, { silent = true, noremap = true, desc = "toggle signature" })
 			end
 
 			lsp_zero.extend_lspconfig({
@@ -181,6 +179,32 @@ return {
 						-- The function below will be called before any actual modifications from lspkind
 						-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
 					}),
+				},
+			})
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+
+				formatting = {
+					format = function(_, vim_item)
+						vim_item.kind = ""
+						return vim_item
+					end,
+				},
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{
+						name = "cmdline",
+						option = {
+							ignore_cmds = { "Man", "!" },
+						},
+					},
+				}),
+			})
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
 				},
 			})
 		end,

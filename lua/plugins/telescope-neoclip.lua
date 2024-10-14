@@ -5,6 +5,7 @@ return {
 			{ "nvim-telescope/telescope.nvim" },
 			{ "kkharji/sqlite.lua", module = "sqlite" },
 		},
+		lazy = true,
 		config = function()
 			require("neoclip").setup({
 				history = 1000, -- Počet položek v historii

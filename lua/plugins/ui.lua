@@ -7,6 +7,7 @@ return {
 			"meuter/lualine-so-fancy.nvim",
 			"NStefan002/screenkey.nvim",
 		},
+		lazy = false,
 		opts = {
 			theme = "catppuccin-mocha",
 		},
@@ -104,6 +105,7 @@ return {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
+		lazy = false, 
 		opts = {
 			transparent_background = true,
 			color_overrides = {

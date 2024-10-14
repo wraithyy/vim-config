@@ -38,6 +38,7 @@ return {
 				},
 				popupmenu = {
 					relative = "editor",
+					backend = "cmp",
 					position = {
 						row = 8,
 						col = "50%",
