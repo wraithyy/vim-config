@@ -5,7 +5,7 @@ require("which-key").add({
 return {
 	"OXY2DEV/markview.nvim",
 	lazy = true, -- Recommended
-	ft = "markdown", -- If you decide to lazy-load anyway
+	ft = { "markdown", "Avante" }, -- If you decide to lazy-load anyway
 
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
@@ -18,6 +18,7 @@ return {
 			checkboxes = presets.checkboxes.nerd,
 			headings = presets.headings.marker,
 			horizontal_rules = presets.horizontal_rules.thick,
+			filetypes = { "markdown", "quarto", "rmd" },
 		})
 		vim.keymap.set(
 			"n",

@@ -1,5 +1,6 @@
 return {
 	"DanWlker/toolbox.nvim",
+	keys = { "<leader>fc" },
 	config = function()
 		require("toolbox").setup({
 			commands = {

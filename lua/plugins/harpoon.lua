@@ -7,6 +7,7 @@ require("which-key").add({
 return {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
+	event = "VeryLazy",
 	dependecies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	config = function()
 		local harpoon = require("harpoon")

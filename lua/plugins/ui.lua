@@ -5,7 +5,6 @@ return {
 			"nvim-tree/nvim-web-devicons",
 			"letieu/harpoon-lualine",
 			"meuter/lualine-so-fancy.nvim",
-			"NStefan002/screenkey.nvim",
 		},
 		lazy = false,
 		opts = {
@@ -105,7 +104,7 @@ return {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
-		lazy = false, 
+		lazy = false,
 		opts = {
 			transparent_background = true,
 			color_overrides = {

@@ -3,6 +3,7 @@ require("which-key").add({
 })
 return {
 	"nvim-pack/nvim-spectre",
+	lazy = true,
 	keys = {
 		{
 			"<leader>r",

@@ -1,9 +1,12 @@
 require("which-key").add({
-	{ "<leader>c", desc = "Colorizer toggle", icon = { icon = "", color = "purple" } },
+	{ "<leader>c", ":ColorizerToggle<CR>", desc = "Colorizer toggle", icon = { icon = "", color = "purple" } },
 })
 return {
 	"norcalli/nvim-colorizer.lua",
-	event = "BufReadPre",
+	lazy = true,
+	cmd = {
+		"ColorizerToggle",
+	},
 	config = function()
 		require("colorizer").setup({
 			"css",
@@ -20,8 +23,5 @@ return {
 			css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
 			css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
 		})
-
-		-- Optional: Keybinding to toggle Colorizer
-		vim.keymap.set("n", "<leader>c", ":ColorizerToggle<CR>", { noremap = true, silent = true })
 	end,
 }

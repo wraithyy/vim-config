@@ -4,6 +4,10 @@ require("which-key").add({
 })
 return {
 	"Equilibris/nx.nvim",
+	lazy = true,
+	keys = {
+		{ "<leader>nx", "<cmd>Telescope nx actions<CR>", desc = "Open nx actions" },
+	},
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
 	},
@@ -16,11 +20,5 @@ return {
 		})
 
 		-- Keybinding to open Telescope for nx actions
-		vim.keymap.set(
-			"n",
-			"<leader>nx",
-			"<cmd>Telescope nx actions<CR>",
-			{ noremap = true, silent = true, desc = "Open nx actions" }
-		)
 	end,
 }

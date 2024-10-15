@@ -3,15 +3,11 @@ require("which-key").add({
 })
 return {
 	"marilari88/twoslash-queries.nvim",
-	config = function()
-		vim.keymap.set(
-			"n",
-			"<leader>ts",
-			":TwoslashQueryEnable<CR>",
-			{ noremap = true, silent = true, desc = "Two Slash Query" }
-		)
-		require("twoslash-queries").setup({
-			highlight = "Type", -- to set up a highlight group for the virtual text
-		})
-	end,
+	opts = {
+		highlight = "Type", -- to set up a highlight group for the virtual text
+	},
+	cmd = "TwoslashQueryEnable",
+	keys = {
+		{ "<leader>ts", "<cmd>TwoslashQueryEnable<CR>", desc = "Two Slash Query" },
+	},
 }
