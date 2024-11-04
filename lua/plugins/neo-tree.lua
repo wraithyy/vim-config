@@ -5,15 +5,32 @@ require("which-key").add({
 })
 return {
 	{
-		
+
 		"nvim-neo-tree/neo-tree.nvim",
-		lazy = false, 
+		lazy = false,
 		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- volitelně, pro ikony
 			"MunifTanjim/nui.nvim",
 		},
+		init = function()
+			vim.api.nvim_create_autocmd("BufEnter", {
+				group = vim.api.nvim_create_augroup("load_neo_tree", {}),
+				desc = "Loads neo-tree when openning a directory",
+				callback = function(args)
+					local stats = vim.uv.fs_stat(args.file)
+
+					if not stats or stats.type ~= "directory" then
+						return
+					end
+
+					require("neo-tree")
+
+					return true
+				end,
+			})
+		end,
 		config = function()
 			local get_path = function(state)
 				local node = state.tree:get_node()

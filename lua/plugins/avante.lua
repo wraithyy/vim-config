@@ -2,7 +2,9 @@ return {
 	"yetone/avante.nvim",
 	build = "make",
 
-	lazy = false,
+	event = { "BufReadPre", "BufNewFile" },
+	cmd = "Avante",
+	lazy = true,
 	opts = {},
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",

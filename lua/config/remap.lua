@@ -15,23 +15,28 @@ vim.keymap.set(
 	"<cmd>lua vim.diagnostic.open_float()<CR>",
 	{ desc = "Show Problems", noremap = true, silent = true }
 )
-vim.keymap.set("n", "<space>", "<nop>")
--- Number remaps --
-vim.keymap.set("n", "+", "1", { noremap = true })
-vim.keymap.set("n", "ě", "2", { noremap = true })
-vim.keymap.set("n", "š", "3", { noremap = true })
-vim.keymap.set("n", "č", "4", { noremap = true })
-vim.keymap.set("n", "ř", "5", { noremap = true })
-vim.keymap.set("n", "ž", "6", { noremap = true })
-vim.keymap.set("n", "ý", "7", { noremap = true })
-vim.keymap.set("n", "á", "8", { noremap = true })
-vim.keymap.set("n", "í", "9", { noremap = true })
-vim.keymap.set("n", "é", "0", { noremap = true })
-vim.keymap.set("n", "ú", "/", { noremap = true })
-vim.keymap.set("n", "ů", ";", { noremap = true })
+vim.o.langmap = table.concat({
+	"+1,ě2,š3,č4,ř5,ž6,ý7,á8,í9,é0,ú-,ů=", -- české znaky přemapované na čísla
+	"2@,3#,4$,5~,6^,7&,=%,8*,9{,0}",
+}, ",")
 
-vim.keymap.set("n", "9", "{", { noremap = true })
-vim.keymap.set("n", "0", "}", { noremap = true })
+vim.keymap.set("n", "<space>", "<nop>")
+-- -- Number remaps --
+-- vim.keymap.set("n", "+", "1", { noremap = true })
+-- vim.keymap.set("n", "ě", "2", { noremap = true })
+-- vim.keymap.set("n", "š", "3", { noremap = true })
+-- vim.keymap.set("n", "č", "4", { noremap = true })
+-- vim.keymap.set("n", "ř", "5", { noremap = true })
+-- vim.keymap.set("n", "ž", "6", { noremap = true })
+-- vim.keymap.set("n", "ý", "7", { noremap = true })
+-- vim.keymap.set("n", "á", "8", { noremap = true })
+-- vim.keymap.set("n", "í", "9", { noremap = true })
+-- vim.keymap.set("n", "é", "0", { noremap = true })
+-- vim.keymap.set("n", "ú", "/", { noremap = true })
+-- vim.keymap.set("n", "ů", ";", { noremap = true })
+--
+-- vim.keymap.set("n", "9", "{", { noremap = true })
+-- vim.keymap.set("n", "0", "}", { noremap = true })
 
 vim.keymap.set("n", "<leader>j", vim.lsp.buf.format, { desc = "Format Document" })
 -- Drag line --
@@ -41,8 +46,6 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 --vim.keymap.set("n", "<C-d>", "<C-d>zz")
 -- Move page up and center --
 --vim.keymap.set("n", "<C-u>", "<C-u>zz")
--- ctrl c to excape --
-vim.keymap.set("i", "<C-c>", "<Esc>")
 -- go to previous buffer --
 vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 -- go to next buffer --

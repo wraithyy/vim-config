@@ -6,6 +6,7 @@ return {
 		"nvim-telescope/telescope.nvim", -- Telescope jako závislost pro session-lens
 		"BlakeJC94/alpha-nvim-fortune",
 	},
+	cmd = "Alpha",
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")

@@ -29,6 +29,7 @@ return {
 			lua = { "stylua" },
 			python = { "isort", "black" },
 			javascript = { "prettierd", "prettier", "eslintd", stop_after_first = true },
+			typescript = { "prettierd", "prettier", "eslintd", stop_after_first = true },
 			json = { "prettierd", "prettier", "eslintd", stop_after_first = true },
 			sh = { "shfmt" },
 		},
