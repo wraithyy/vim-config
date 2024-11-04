@@ -14,6 +14,11 @@ return {
 	tag = "0.1.8",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
+		require("telescope").setup({
+			defaults = {
+				path_display = { "filename_first" },
+			},
+		})
 		local builtin = require("telescope.builtin")
 		local utils = require("telescope.utils")
 
@@ -40,12 +45,9 @@ return {
 		vim.keymap.set("n", "<leader>gb", function()
 			require("telescope.builtin").git_branches()
 		end, { desc = "Find git branches", noremap = true, silent = true })
-		vim.keymap.set(
-			"n",
-			"<leader>?",
-			require("telescope.builtin").oldfiles,
-			{ desc = "[?] Find recently opened files" }
-		)
+		vim.keymap.set("n", "<leader>?", function()
+			builtin.oldfiles({ path_display = { "filename_first" } })
+		end, { desc = "Find recently opened files" })
 		vim.keymap.set("n", "<leader>gt", builtin.git_stash, { desc = "Git Stashes", noremap = true, silent = true })
 		vim.keymap.set("n", "<leader>fx", builtin.treesitter, { desc = "Find text in treesitter" })
 	end,
