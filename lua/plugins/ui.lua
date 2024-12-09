@@ -148,6 +148,7 @@ return {
 					["@lsp.type.interface"] = { fg = "#ffb1ad" }, -- Tag names
 					-- Line numbers
 					LineNr = { fg = colors.teal }, -- Regular line numbers
+
 					CursorLineNr = { fg = colors.teal }, -- Current line number
 					MarkSignHL = { fg = colors.yellow },
 

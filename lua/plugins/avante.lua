@@ -5,7 +5,18 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	cmd = "Avante",
 	lazy = true,
-	opts = {},
+	opts = {
+		provider = "ollama",
+		vendors = {
+			---@type AvanteProvider
+			ollama = {
+				__inherited_from = "openai",
+				endpoint = "127.0.0.1:11434/v1",
+				model = "codellama:13b",
+				api_key_name = "",
+			},
+		},
+	},
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"stevearc/dressing.nvim",
@@ -29,14 +40,6 @@ return {
 					use_absolute_path = true,
 				},
 			},
-		},
-		{
-			-- Make sure to set this up properly if you have lazy=true
-			"MeanderingProgrammer/render-markdown.nvim",
-			opts = {
-				file_types = { "markdown", "Avante" },
-			},
-			ft = { "markdown", "Avante" },
 		},
 	},
 }
