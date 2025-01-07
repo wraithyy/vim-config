@@ -7,7 +7,7 @@ return {
 			-- Customize or remove this keymap to your liking
 			"<leader>j",
 			function()
-				require("conform").format({ async = true }, function(err)
+				require("conform").format({ async = true, lsp_format = "fallback" }, function(err)
 					if not err then
 						local mode = vim.api.nvim_get_mode().mode
 						if vim.startswith(string.lower(mode), "v") then
@@ -28,9 +28,11 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			python = { "isort", "black" },
-			javascript = { "prettierd", "prettier", "eslintd", stop_after_first = true },
-			typescript = { "prettierd", "prettier", "eslintd", stop_after_first = true },
-			json = { "prettierd", "prettier", "eslintd", stop_after_first = true },
+			javascript = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			javascriptreact = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			typescript = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			typescriptreact = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			json = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
 			sh = { "shfmt" },
 		},
 		-- Set default options

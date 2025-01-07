@@ -38,7 +38,6 @@ vim.keymap.set("n", "<space>", "<nop>")
 -- vim.keymap.set("n", "9", "{", { noremap = true })
 -- vim.keymap.set("n", "0", "}", { noremap = true })
 
-vim.keymap.set("n", "<leader>j", vim.lsp.buf.format, { desc = "Format Document" })
 -- Drag line --
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

@@ -57,7 +57,7 @@ return {
 		)
 		vim.keymap.set(
 			"n",
-			"<leader>gh",
+			"<leader>gf",
 			":DiffviewFileHistory<CR>",
 			{ noremap = true, silent = true, desc = "File History" }
 		)
