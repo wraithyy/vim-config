@@ -149,6 +149,8 @@ return {
 					-- Line numbers
 					LineNr = { fg = colors.teal }, -- Regular line numbers
 
+					BlinkCmpMenuBorder = { fg = colors.teal }, -- Cursor line number
+					BlinkCmpMenuLabel = { fg = colors.teal }, -- Cursor line number
 					CursorLineNr = { fg = colors.teal }, -- Current line number
 					MarkSignHL = { fg = colors.yellow },
 
@@ -190,6 +192,8 @@ return {
 					WilderText = { fg = colors.text, bg = colors.overlay0 }, -- Wilder highlight color
 					WhichKeyValue = { fg = colors.peach }, -- WhichKey description color
 					NeoTreeIndentMarker = { fg = "#303039" },
+					TelescopeNormal = { bg = "none" },
+					ZenBg = { bg = "none" },
 				}
 			end,
 			integrations = {
@@ -210,6 +214,7 @@ return {
 				harpoon = true,
 				mason = true,
 				noice = true,
+				blink_cmp = true,
 				native_lsp = {
 					enabled = true,
 					virtual_text = {

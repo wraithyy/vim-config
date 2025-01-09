@@ -50,8 +50,9 @@ vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffe
 -- go to next buffer --
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
 -- delete without yank --
-vim.keymap.set("n", "<leader>dd", '"_d', { desc = "Delete without yank" })
-vim.keymap.set("n", "<leader>pp", '"_dP', { desc = "Paste without yank" })
+-- vim.keymap.set("n", "<leader>dd", '"_d', { desc = "Delete without yank" })
+-- vim.keymap.set("n", "<leader>pp", '"_dP', { desc = "Paste without yank" })
+--
 -- movement to end and beginning of line --
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
@@ -70,9 +71,9 @@ vim.keymap.set("n", "§", "`", { noremap = true, silent = true })
 require("which-key").add({
 	{ "<leader>p", desc = "Explorer/paste" },
 	{ "<leader>pv", desc = "Explorer", icon = "" },
-	{ "<leader>pp", desc = "Paste without yank", icon = "" },
-	{ "<leader>d", desc = "Delete without yank", icon = "" },
-	{ "<leader>dd", desc = "Delete without yank", icon = "" },
+	-- { "<leader>pp", desc = "Paste without yank", icon = "" },
+	-- { "<leader>d", desc = "Delete without yank", icon = "" },
+	-- { "<leader>dd", desc = "Delete without yank", icon = "" },
 	{ "<leader>b", desc = "Buffer select", icon = "" },
 	{ "<leader>bp", desc = "Previous buffer", icon = "" },
 	{ "<leader>bn", desc = "Next buffer", icon = "" },
