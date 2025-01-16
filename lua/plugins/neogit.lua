@@ -18,6 +18,7 @@ return {
 		require("neogit").setup({
 			integrations = {
 				diffview = true, -- Enable integration with Diffview
+				telescope = true,
 			},
 		})
 		vim.keymap.set(
@@ -40,26 +41,6 @@ return {
 			"<leader>gC",
 			":Neogit cherry_pick<CR>",
 			{ noremap = true, silent = true, desc = "Cherry-pick Commit" }
-		)
-
-		-- Diffview shortcuts for advanced diffing
-		vim.keymap.set(
-			"n",
-			"<leader>gd",
-			":DiffviewOpen<CR>",
-			{ noremap = true, silent = true, desc = "Open Diffview" }
-		)
-		vim.keymap.set(
-			"n",
-			"<leader>gq",
-			":DiffviewClose<CR>",
-			{ noremap = true, silent = true, desc = "Close Diffview" }
-		)
-		vim.keymap.set(
-			"n",
-			"<leader>gf",
-			":DiffviewFileHistory<CR>",
-			{ noremap = true, silent = true, desc = "File History" }
 		)
 	end,
 }

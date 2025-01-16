@@ -82,6 +82,9 @@ return {
 			lspconfig.ts_ls.setup({
 				on_attach = on_attach,
 			})
+			lspconfig.eslint.setup({
+				on_attach = on_attach,
+			})
 
 			-- Setup for Rust analyzer
 			lspconfig.rust_analyzer.setup({
