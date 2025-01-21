@@ -15,7 +15,16 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				-- Zde si nastavíš jazyky, které chceš používat
-				ensure_installed = { "c", "lua", "python", "javascript", "typescript", "tsx" }, -- Přidej zde jazyky, které chceš
+				ensure_installed = {
+					"c",
+					"lua",
+					"python",
+					"javascript",
+					"typescript",
+					"tsx",
+					"markdown",
+					"markdown_inline",
+				}, -- Přidej zde jazyky, které chceš
 				sync_install = false, -- Jazyky se budou instalovat asynchronně
 				auto_install = true, -- Automatická instalace chybějících parsers
 				indent = { enable = true },

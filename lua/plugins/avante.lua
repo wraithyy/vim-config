@@ -1,9 +1,12 @@
 return {
 	"yetone/avante.nvim",
-	event = "VeryLazy",
-	lazy = false,
+	lazy = true,
+	command = { "AvanteAsk", "AvanteChat" },
 	version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 	opts = {
+		behaviour = {
+			auto_suggestions = false, -- Experimental stage
+		},
 		-- add any opts here
 		file_selector = {
 			--- @alias FileSelectorProvider "native" | "fzf" | "telescope" | string
@@ -30,13 +33,12 @@ return {
 		"nvim-lua/plenary.nvim",
 		"MunifTanjim/nui.nvim",
 		--- The below dependencies are optional,
-		"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
 		"zbirenbaum/copilot.lua", -- for providers='copilot'
 		{
 			-- support for image pasting
 			"HakonHarnes/img-clip.nvim",
-			event = "VeryLazy",
+			lazy = true,
 			opts = {
 				-- recommended settings
 				default = {

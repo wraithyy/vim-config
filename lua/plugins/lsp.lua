@@ -19,10 +19,6 @@ end
 
 local on_attach = function(client, bufnr)
 	require("twoslash-queries").attach(client, bufnr)
-	require("lsp_signature").on_attach({
-		bind = true,
-		handler_opts = { border = "rounded" },
-	}, bufnr)
 	lsp_highlight_document(client)
 
 	local telescope = require("telescope.builtin")

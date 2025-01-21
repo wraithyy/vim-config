@@ -194,6 +194,7 @@ return {
 					NeoTreeIndentMarker = { fg = "#303039" },
 					TelescopeNormal = { bg = "none" },
 					ZenBg = { bg = "none" },
+					NeominimapBorder = { fg = colors.overlay0, bg = "none" },
 				}
 			end,
 			integrations = {
@@ -215,6 +216,10 @@ return {
 				mason = true,
 				noice = true,
 				blink_cmp = true,
+				mini = {
+					enabled = true,
+					indentscope_color = "",
+				},
 				native_lsp = {
 					enabled = true,
 					virtual_text = {

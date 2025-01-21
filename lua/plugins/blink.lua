@@ -1,21 +1,13 @@
 return {
 	{
-		"Saghen/blink.compat",
-		dependencies = {
-			"epwalsh/obsidian.nvim",
-			"Saghen/blink.cmp",
-		},
-		config = function()
-			require("blink.compat").setup({
-				sources = {
-					obsidian = {
-						name = "obsidian",
-						module = "obsidian.compat.cmp",
-						score_offset = 100,
-					},
-				},
-			})
-		end,
+
+		"saghen/blink.compat",
+		version = false,
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		optional = true,
+		enabled = false,
 	},
 	{
 		"saghen/blink.cmp",
@@ -28,15 +20,14 @@ return {
 			},
 			"mikavilpas/blink-ripgrep.nvim",
 			"moyiz/blink-emoji.nvim",
-			{ "epwalsh/obsidian.nvim" },
 			{ "saghen/blink.compat", lazy = true, version = false },
 		},
-		opts_extend = { "sources.completion.enabled_providers" },
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
 			sources = {
 				default = {
+					"lazydev",
 					"lsp",
 					"path",
 					"buffer",
@@ -45,10 +36,16 @@ return {
 					"ripgrep",
 					"emoji",
 					"obsidian",
-					"obsidian_new",
 					"obsidian_tags",
+					"obsidian_new",
 				},
 				providers = {
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
 					lsp = {
 						name = "lsp",
 						enabled = true,
@@ -120,16 +117,13 @@ return {
 					},
 					obsidian = {
 						name = "obsidian",
-						enabled = true,
 						module = "blink.compat.source",
 					},
 					obsidian_new = {
-						enabled = true,
 						name = "obsidian_new",
 						module = "blink.compat.source",
 					},
 					obsidian_tags = {
-						enabled = true,
 						name = "obsidian_tags",
 						module = "blink.compat.source",
 					},
@@ -185,13 +179,12 @@ return {
 				["<C-S-Space>"] = { "show" },
 				["<S-CR>"] = { "hide" },
 				["<CR>"] = { "select_and_accept", "fallback" },
-				["<S-Tab>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
 				["<Up>"] = { "select_prev", "fallback" },
 				["<PageDown>"] = { "scroll_documentation_down" },
 				["<PageUp>"] = { "scroll_documentation_up" },
 				cmdline = {
-					["<Tab>"] = { "accept" },
+					["<Tab>"] = { "accept", "fallback" },
 					["<Down>"] = { "select_next", "fallback" },
 					["<Up>"] = { "select_prev", "fallback" },
 				},
@@ -209,7 +202,7 @@ return {
 				documentation = { window = { border = "rounded" }, auto_show = true, auto_show_delay_ms = 500 },
 			},
 
-			signature = { window = { border = "rounded" } },
+			signature = { window = { border = "rounded" }, enabled = true },
 		},
 	},
 }
