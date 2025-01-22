@@ -1,7 +1,5 @@
 return {
 	"yetone/avante.nvim",
-	lazy = true,
-	command = { "AvanteAsk", "AvanteChat" },
 	version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 	opts = {
 		behaviour = {
@@ -10,7 +8,7 @@ return {
 		-- add any opts here
 		file_selector = {
 			--- @alias FileSelectorProvider "native" | "fzf" | "telescope" | string
-			provider = "telescope",
+			provider = "native",
 			-- Options override for custom providers
 			provider_opts = {},
 		},

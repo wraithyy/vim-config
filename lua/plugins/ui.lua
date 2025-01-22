@@ -198,7 +198,6 @@ return {
 				}
 			end,
 			integrations = {
-				telescope = true,
 				cmp = true,
 				barbecue = {
 					dim_dirname = true, -- directory name is dimmed by default
@@ -240,9 +239,10 @@ return {
 						background = true,
 					},
 				},
-				alpha = true,
 				notify = true,
 				neogit = true,
+
+				snacks = true,
 			},
 			config = function()
 				vim.defer_fn(function()

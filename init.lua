@@ -13,29 +13,13 @@ vim.opt.wrap = false
 vim.o.mousescroll = "ver:3,hor:0"
 vim.opt.ignorecase = true
 vim.cmd([[
-
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})
 ]])
-vim.api.nvim_create_autocmd("VimEnter", {
-	desc = "Start Alpha when vim is opened with no arguments",
-	group = group_name,
-	callback = function()
-		local should_skip = false
-		if vim.fn.argc() > 0 or vim.fn.line2byte("$") ~= -1 or not vim.o.modifiable then
-			should_skip = true
-		else
-			for _, arg in pairs(vim.v.argv) do
-				if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-					should_skip = true
-					break
-				end
-			end
-		end
-		if not should_skip then
-			require("alpha").start(true, require("alpha").default_config)
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function()
+-- 		require("snacks").dashboard()
+-- 	end,
+-- })
 vim.opt.guicursor = {
 	"n-v-c:block", -- Normal, visual, command-line: block cursor
 	"i-ci-ve:ver25", -- Insert, command-line insert, visual-exclude: vertical bar cursor with 25% width

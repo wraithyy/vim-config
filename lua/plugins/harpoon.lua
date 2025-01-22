@@ -8,7 +8,7 @@ return {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
 	event = "VeryLazy",
-	dependecies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	dependecies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local harpoon = require("harpoon")
 		-- Mapování kláves, podle toho co máš na obrázku

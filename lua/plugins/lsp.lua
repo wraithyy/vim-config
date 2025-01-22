@@ -21,15 +21,15 @@ local on_attach = function(client, bufnr)
 	require("twoslash-queries").attach(client, bufnr)
 	lsp_highlight_document(client)
 
-	local telescope = require("telescope.builtin")
+	-- local telescope = require("telescope.builtin")
 
 	-- Keymaps for LSP functions
 	local opts = { buffer = bufnr, desc = "LSP action" }
-	vim.keymap.set("n", "gd", telescope.lsp_definitions, { buffer = bufnr, desc = "Go to Definition" })
-	vim.keymap.set("n", "gr", telescope.lsp_references, { buffer = bufnr, desc = "Find References" })
-	vim.keymap.set("n", "gi", telescope.lsp_implementations, { buffer = bufnr, desc = "Go to Implementation" })
-	vim.keymap.set("n", "go", telescope.lsp_type_definitions, { buffer = bufnr, desc = "Go to Type Definition" })
-	vim.keymap.set("n", "gs", telescope.lsp_document_symbols, { buffer = bufnr, desc = "Document Symbols" })
+	-- vim.keymap.set("n", "gd", telescope.lsp_definitions, { buffer = bufnr, desc = "Go to Definition" })
+	-- vim.keymap.set("n", "gr", telescope.lsp_references, { buffer = bufnr, desc = "Find References" })
+	-- vim.keymap.set("n", "gi", telescope.lsp_implementations, { buffer = bufnr, desc = "Go to Implementation" })
+	-- vim.keymap.set("n", "go", telescope.lsp_type_definitions, { buffer = bufnr, desc = "Go to Type Definition" })
+	-- vim.keymap.set("n", "gs"telescope, telescope.lsp_document_symbols, { buffer = bufnr, desc = "Document Symbols" })
 
 	-- Standard LSP keymaps
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover Documentation" })

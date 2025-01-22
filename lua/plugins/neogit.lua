@@ -10,15 +10,11 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim", -- required
 		"sindrets/diffview.nvim", -- optional - Diff integration
-
-		-- Only one of these is needed, not both.
-		"nvim-telescope/telescope.nvim", -- optional
 	},
 	config = function()
 		require("neogit").setup({
 			integrations = {
 				diffview = true, -- Enable integration with Diffview
-				telescope = true,
 			},
 		})
 		vim.keymap.set(
