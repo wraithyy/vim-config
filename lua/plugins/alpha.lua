@@ -1,7 +1,7 @@
 return {
 	"goolord/alpha-nvim",
 	dependencies = {
-		"nvim-tree/nvim-web-devicons", -- Volitelné pro ikony
+		"echasnovski/mini.icons",
 		"rmagatti/auto-session", -- Plugin pro automatickou správu relací
 		"nvim-telescope/telescope.nvim", -- Telescope jako závislost pro session-lens
 		"BlakeJC94/alpha-nvim-fortune",

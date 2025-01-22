@@ -11,6 +11,7 @@ vim.opt.cursorline = true
 vim.opt.clipboard = "unnamedplus,unnamed"
 vim.opt.wrap = false
 vim.o.mousescroll = "ver:3,hor:0"
+vim.opt.ignorecase = true
 vim.cmd([[
 
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})

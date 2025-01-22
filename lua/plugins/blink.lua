@@ -5,6 +5,7 @@ return {
 		version = false,
 	},
 	{
+
 		"hrsh7th/nvim-cmp",
 		optional = true,
 		enabled = false,
@@ -13,6 +14,7 @@ return {
 		"saghen/blink.cmp",
 		enabled = true,
 		version = "*",
+		event = { "CmdlineEnter", "InsertEnter" },
 		dependencies = {
 			{
 				"L3MON4D3/LuaSnip",

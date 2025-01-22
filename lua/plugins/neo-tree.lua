@@ -11,7 +11,7 @@ return {
 		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", -- volitelně, pro ikony
+			"echasnovski/mini.icons",
 			"MunifTanjim/nui.nvim",
 		},
 		init = function()

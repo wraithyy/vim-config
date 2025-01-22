@@ -1,10 +1,20 @@
+local wk = require("which-key")
+wk.add({
+	{ "<leader>o", group = "󰎚 Obsidian" },
+	{ "<leader>on", "<cmd>ObsidianNew<CR>", desc = "󱞁 New Note" },
+	{ "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", desc = "󰈙 Quick open note" },
+	{ "<leader>os", "<cmd>ObsidianSearch<CR>", desc = "󰍉 Obsidian search" },
+})
+
 return {
+
 	"epwalsh/obsidian.nvim",
 	version = "*", -- recommended, use latest release instead of latest commit
 	event = {
 		"BufReadPre " .. vim.fn.expand("~") .. "Notes/**/*.md",
 		"BufNewFile " .. vim.fn.expand("~") .. "Notes/**/*.md",
 	},
+	command = { "ObsidianOpen", "ObsidianQuickSwitch", "ObsidianNew" },
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
@@ -65,12 +75,5 @@ return {
 		cmp.register_source("obsidian_tags", require("cmp_obsidian_tags").new())
 
 		-- WhichKey mapování
-		local wk = require("which-key")
-		wk.add({
-			{ "<leader>o", group = "󰎚 Obsidian" },
-			{ "<leader>on", "<cmd>ObsidianNew<CR>", desc = "󱞁 New Note" },
-			{ "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", desc = "󰈙 Quick open note" },
-			{ "<leader>os", "<cmd>ObsidianSearch<CR>", desc = "󰍉 Obsidian search" },
-		})
 	end,
 }

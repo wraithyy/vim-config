@@ -4,7 +4,7 @@ return {
 	cmd = "DiffviewOpen",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
+		"echasnovski/mini.icons",
 	},
 	opts = { view = { default = { layout = "diff2_horizontal" } } },
 	keys = {
