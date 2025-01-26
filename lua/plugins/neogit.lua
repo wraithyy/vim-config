@@ -6,7 +6,7 @@ require("which-key").add({
 return {
 	"NeogitOrg/neogit",
 
-	event = "VeryLazy",
+	command = { "Neogit" },
 	dependencies = {
 		"nvim-lua/plenary.nvim", -- required
 		"sindrets/diffview.nvim", -- optional - Diff integration

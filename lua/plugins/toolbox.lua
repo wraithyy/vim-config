@@ -36,6 +36,6 @@ return {
 			},
 		})
 
-		vim.keymap.set({ "n", "v" }, "<leader>fc", require("toolbox").show_picker, { desc = "Find Custom Commands" })
+		vim.keymap.set({ "n", "v" }, "<leader>fx", require("toolbox").show_picker, { desc = "Find Custom Commands" })
 	end,
 }

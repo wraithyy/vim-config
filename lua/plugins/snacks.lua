@@ -2,8 +2,21 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
+	---@type snacks.Config
 	opts = {
+		-- TODO: statuscolumn, dim,
+		statuscolumn = { enabled = true },
 		bigfile = { enabled = true },
+		words = { enabled = true },
+		lazygit = {},
+		git = {},
+		toggle = {},
+		scroll = { enabled = true },
+		indent = { enabled = true },
+		input = { enabled = true },
+		notifier = { enabled = true },
+		scope = { enabled = true },
+		quickfile = { enabled = true },
 		picker = {
 			layout = { preset = "telescope" },
 			formatters = {
@@ -56,7 +69,7 @@ return {
 		{
 			"<leader>fb",
 			function()
-				Snacks.picker.buffers()
+				Snacks.picker.buffers({ layout = { preset = "select" } })
 			end,
 			desc = "Buffers",
 		},
@@ -68,9 +81,16 @@ return {
 			desc = "Find Config File",
 		},
 		{
+			"<leader>fF",
+			function()
+				Snacks.picker.files()
+			end,
+			desc = "Find Files",
+		},
+		{
 			"<leader>ff",
 			function()
-				Snacks.picker.smart({ layout = { preset = "vscode" } })
+				Snacks.picker.smart({ layout = { preset = "select" } })
 			end,
 			desc = "Find Files",
 		},
@@ -96,13 +116,13 @@ return {
 			end,
 			desc = "Git Log",
 		},
-		-- {
-		-- 	"<leader>gs",
-		-- 	function()
-		-- 		Snacks.picker.git_status()
-		-- 	end,
-		-- 	desc = "Git Status",
-		-- },
+		{
+			"<leader>gx",
+			function()
+				Snacks.picker.git_status()
+			end,
+			desc = "Git Status",
+		},
 		-- Grep
 		-- search
 		{
@@ -232,6 +252,20 @@ return {
 				Snacks.picker.lsp_type_definitions()
 			end,
 			desc = "Goto T[y]pe Definition",
+		},
+		{
+			"<leader>lg",
+			function()
+				Snacks.lazygit.open()
+			end,
+			desc = "LazyGit",
+		},
+		{
+			"<leader>gh",
+			function()
+				Snacks.lazygit.log_file()
+			end,
+			desc = "File History",
 		},
 	},
 }

@@ -49,4 +49,21 @@ return {
 			})
 		end,
 	},
+	{
+		"echasnovski/mini.tabline",
+		version = false,
+		config = function()
+			require("mini.tabline").setup({})
+			vim.api.nvim_set_hl(0, "MiniTablineCurrent", {
+				bg = "#1E1E2E",
+				cterm = {
+					bold = true,
+					italic = true,
+					underline = true,
+				},
+				italic = true,
+				sp = "#00e8c6",
+			})
+		end,
+	},
 }

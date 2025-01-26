@@ -131,6 +131,12 @@ return {
 					Constant = { fg = colors.peach }, -- Color5 mapped to peach
 					String = { fg = colors.green }, -- Color6 mapped to green
 
+					MiniTablineCurrent = {
+						fg = colors.teal,
+						cterm = { underline = false },
+						italic = true,
+						underline = false,
+					},
 					-- Variables (updated to use colors.teal)
 					TSVariable = { fg = colors.teal }, -- Variable names
 					["@variable"] = { fg = colors.teal }, -- Variable names
@@ -208,7 +214,6 @@ return {
 				diffview = true,
 				window_picker = true,
 				which_key = true,
-				fidget = true,
 				neotree = true,
 				leap = true,
 				harpoon = true,
@@ -251,5 +256,4 @@ return {
 			end,
 		},
 	},
-	"rcarriga/nvim-notify",
 }

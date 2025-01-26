@@ -14,14 +14,13 @@ return {
 		"BufReadPre " .. vim.fn.expand("~") .. "Notes/**/*.md",
 		"BufNewFile " .. vim.fn.expand("~") .. "Notes/**/*.md",
 	},
-	command = { "ObsidianOpen", "ObsidianQuickSwitch", "ObsidianNew" },
+	cmd = { "ObsidianOpen", "ObsidianQuickSwitch", "ObsidianNew" },
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
 
 		-- see below for full list of optional dependencies 👇
 	},
-	lazy = true,
 	opts = {
 
 		dir = "~/Notes",
