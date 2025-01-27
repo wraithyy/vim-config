@@ -26,11 +26,11 @@ return {
 					},
 					lualine_b = {
 						{ "fancy_branch" },
-						{
-							"harpoon2",
-							active_indicators = { "󰬏", "󰬑", "󰬒", "󰬓" },
-							indicators = { "󰰀", "󰰆", "󰰉", "󰰌" },
-						},
+						-- {
+						-- 	-- "harpoon2",
+						-- 	active_indicators = { "󰬏", "󰬑", "󰬒", "󰬓" },
+						-- 	indicators = { "󰰀", "󰰆", "󰰉", "󰰌" },
+						-- },
 					},
 					lualine_c = {
 						{ "fancy_diff" },
@@ -45,38 +45,38 @@ return {
 
 						{ "fancy_filetype", ts_icon = "" },
 						{ "fancy_cwd", substitute_home = true },
-						{
-							function()
-								local status = require("neocodeium").get_status()
-								if status == 0 then
-									return "󰘦" -- Ikona pro Enabled (zapnuto)
-								elseif status == 1 then
-									return "" -- Ikona pro Globally Disabled
-								elseif status == 2 then
-									return "󰓛" -- Ikona pro Buffer Disabled
-								elseif status == 3 or status == 4 then
-									return "" -- Ikona pro Filetype Disabled nebo options.enabled = false
-								elseif status == 5 then
-									return "⚠️" -- Ikona pro Wrong Encoding
-								else
-									return "" -- Prázdné, pokud není k dispozici status
-								end
-							end,
-							color = function()
-								local status = require("neocodeium").get_status()
-								if status == 0 then
-									return { fg = "#00FF00", gui = "bold" } -- Zelená pro Enabled
-								elseif status == 1 then
-									return { fg = "#FF0000", gui = "bold" } -- Červená pro Globally Disabled
-								elseif status == 2 then
-									return { fg = "#FF4500", gui = "bold" } -- Oranžová pro Buffer Disabled
-								elseif status == 5 then
-									return { fg = "#FFD700", gui = "bold" } -- Žlutá pro Wrong Encoding
-								else
-									return { fg = "#FFFFFF", gui = "bold" } -- Defaultní barva pro ostatní stavy
-								end
-							end,
-						},
+						-- {
+						-- 	function()
+						-- 		local status = require("neocodeium").get_status()
+						-- 		if status == 0 then
+						-- 			return "󰘦" -- Ikona pro Enabled (zapnuto)
+						-- 		elseif status == 1 then
+						-- 			return "" -- Ikona pro Globally Disabled
+						-- 		elseif status == 2 then
+						-- 			return "󰓛" -- Ikona pro Buffer Disabled
+						-- 		elseif status == 3 or status == 4 then
+						-- 			return "" -- Ikona pro Filetype Disabled nebo options.enabled = false
+						-- 		elseif status == 5 then
+						-- 			return "⚠️" -- Ikona pro Wrong Encoding
+						-- 		else
+						-- 			return "" -- Prázdné, pokud není k dispozici status
+						-- 		end
+						-- 	end,
+						-- 	color = function()
+						-- 		local status = require("neocodeium").get_status()
+						-- 		if status == 0 then
+						-- 			return { fg = "#00FF00", gui = "bold" } -- Zelená pro Enabled
+						-- 		elseif status == 1 then
+						-- 			return { fg = "#FF0000", gui = "bold" } -- Červená pro Globally Disabled
+						-- 		elseif status == 2 then
+						-- 			return { fg = "#FF4500", gui = "bold" } -- Oranžová pro Buffer Disabled
+						-- 		elseif status == 5 then
+						-- 			return { fg = "#FFD700", gui = "bold" } -- Žlutá pro Wrong Encoding
+						-- 		else
+						-- 			return { fg = "#FFFFFF", gui = "bold" } -- Defaultní barva pro ostatní stavy
+						-- 		end
+						-- 	end,
+						-- },
 					},
 					lualine_z = {
 						{ "fancy_lsp_servers" },

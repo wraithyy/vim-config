@@ -178,6 +178,7 @@ return {
 
 			keymap = {
 				preset = "enter",
+				["<Tab>"] = { "fallback" },
 				["<C-S-Space>"] = { "show" },
 				["<S-CR>"] = { "hide" },
 				["<CR>"] = { "select_and_accept", "fallback" },
@@ -201,6 +202,7 @@ return {
 						},
 					},
 				},
+				list = { selection = { preselect = false, auto_insert = false } },
 				documentation = { window = { border = "rounded" }, auto_show = true, auto_show_delay_ms = 500 },
 			},
 
