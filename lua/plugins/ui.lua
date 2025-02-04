@@ -12,6 +12,7 @@ return {
 		},
 		config = function()
 			vim.g.screenkey_statusline_component = true
+
 			require("lualine").setup({
 				options = {
 					theme = "catppuccin-mocha",

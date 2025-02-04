@@ -1,5 +1,5 @@
 require("which-key").add({
-	{ "<leader>c", ":ColorizerToggle<CR>", desc = "Colorizer toggle", icon = { icon = "", color = "purple" } },
+	{ "<leader>co", ":ColorizerToggle<CR>", desc = "Colorizer toggle", icon = { icon = "", color = "purple" } },
 })
 return {
 	"norcalli/nvim-colorizer.lua",

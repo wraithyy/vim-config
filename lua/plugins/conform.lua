@@ -4,15 +4,13 @@ return {
 	cmd = { "ConformInfo" },
 	keys = {
 		{
-			-- Customize or remove this keymap to your liking
 			"<leader>j",
 			function()
 				require("conform").format({ async = true, lsp_format = "fallback" }, function(err)
-					if not err then
-						local mode = vim.api.nvim_get_mode().mode
-						if vim.startswith(string.lower(mode), "v") then
-							vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-						end
+					if err then
+						vim.notify("Formatting error: " .. err, vim.log.levels.ERROR)
+					else
+						vim.notify("Formatted ", vim.log.levels.INFO)
 					end
 				end)
 			end,
@@ -20,12 +18,8 @@ return {
 			desc = "Format buffer",
 		},
 	},
-	-- This will provide type hinting with LuaLS
-	---@module "conform"
-	---@type conform.setupOpts
 	opts = {
-		-- Define your formatters
-		formatters_by_ft = {
+		formatters_by_ft = setmetatable({
 			lua = { "stylua" },
 			python = { "isort", "black" },
 			javascript = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
@@ -33,23 +27,62 @@ return {
 			typescript = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
 			typescriptreact = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
 			json = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			jsonc = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			css = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
+			scss = { "prettierd", "prettier", "eslint_d", stop_after_first = true },
 			sh = { "shfmt" },
-		},
-		-- Set default options
-		default_format_opts = {
-			lsp_format = "fallback",
-		},
-		-- Set up format-on-save
+		}, {
+			__index = function(_, filetype)
+				local util = require("conform.util")
+
+				-- Zkontroluje, zda je v projektu `biome.json` nebo `biome` v `package.json`
+				local has_biome = util.root_file({ "biome.json", "package.json" }, function(path)
+					if vim.fn.filereadable(path) == 1 then
+						local content = vim.fn.readfile(path)
+						return vim.tbl_contains(content, '"biome"') or vim.fn.fnamemodify(path, ":t") == "biome.json"
+					end
+					return false
+				end)
+
+				-- Pokud je nalezen Biome, použijeme ho pro formátování
+				if has_biome then
+					return { "biome" }
+				end
+
+				-- Jinak použijeme ESLint + Prettier (fallback)
+				local eslint_config = util.root_file({
+					".eslintrc",
+					".eslintrc.js",
+					".eslintrc.json",
+					"package.json",
+				}, function(path)
+					if vim.fn.filereadable(path) == 1 then
+						local content = vim.fn.readfile(path)
+						return vim.tbl_contains(content, '"eslintConfig"') or vim.tbl_contains(content, '"eslint"')
+					end
+					return false
+				end)
+
+				if eslint_config then
+					return { "prettierd", "prettier", "eslint_d", stop_after_first = true }
+				else
+					return { "prettierd", "prettier" }
+				end
+			end,
+		}),
 		format_on_save = { timeout_ms = 500 },
-		-- Customize formatters
 		formatters = {
+			biome = {
+				command = "biome",
+				args = { "format", "--stdin-file-path", "$FILENAME" },
+				stdin = true,
+			},
 			shfmt = {
 				prepend_args = { "-i", "2" },
 			},
 		},
 	},
 	init = function()
-		-- If you want the formatexpr, here is the place to set it
 		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 	end,
 }

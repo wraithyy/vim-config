@@ -56,6 +56,15 @@ return {
 				vim.cmd(string.format('exec(":lcd %s")', p))
 				return p
 			end
+			local folder_decorations = require("config.folder-decorations")
+
+			local folder_icons = folder_decorations.get_folder_icons()
+			local highlights = folder_decorations.get_highlights()
+
+			for group, colors in pairs(highlights) do
+				vim.api.nvim_set_hl(0, group, colors)
+			end
+
 			require("neo-tree").setup({
 				close_if_last_window = true, -- Zavře neo-tree pokud je posledním oknem
 				popup_border_style = "rounded", -- Styl ohraničení pop-up oken
@@ -98,7 +107,30 @@ return {
 						position = "float",
 					},
 				},
+				default_component_configs = {
+					icon = {
+						provider = function(icon, node, state) -- default icon provider utilizes nvim-web-devicons if available
+							if node.type == "file" or node.type == "terminal" then
+								local success, web_devicons = pcall(require, "nvim-web-devicons")
+								local name = node.type == "terminal" and "terminal" or node.name
+								if success then
+									local devicon, hl = web_devicons.get_icon(name)
+									icon.text = devicon or icon.text
+									icon.highlight = hl or icon.highlight
+								end
+							end
+							if node.type == "directory" then
+								local decorated = folder_icons[node.name:lower()]
+								if decorated then
+									icon.text = decorated.text
+									icon.highlight = decorated.hl
+								end
+							end
+						end,
+					},
+				},
 			})
+
 			function FocusOrOpenNeoTree()
 				local neo_tree = require("neo-tree")
 				local win = vim.fn.bufwinnr("Neo-tree")
