@@ -96,13 +96,36 @@ return {
 		end,
 	},
 	{
-		"echasnovski/mini.diff", -- Inline and better diff over the default
-		config = function()
-			local diff = require("mini.diff")
-			diff.setup({
-				-- Disabled by default
-				source = diff.gen_source.none(),
-			})
+		"echasnovski/mini.diff",
+		event = "VeryLazy",
+		keys = {
+			{
+				"<leader>go",
+				function()
+					require("mini.diff").toggle_overlay(0)
+				end,
+				desc = "Toggle mini.diff overlay",
+			},
+		},
+		opts = function()
+			Snacks.toggle({
+				name = "Mini Diff Signs",
+				get = function()
+					return vim.g.minidiff_disable ~= true
+				end,
+				set = function(state)
+					vim.g.minidiff_disable = not state
+					if state then
+						require("mini.diff").enable(0)
+					else
+						require("mini.diff").disable(0)
+					end
+					-- HACK: redraw to update the signs
+					vim.defer_fn(function()
+						vim.cmd([[redraw!]])
+					end, 200)
+				end,
+			}):map("<leader>uG")
 		end,
 	},
 }
