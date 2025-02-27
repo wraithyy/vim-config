@@ -16,6 +16,7 @@ return {
 		"saghen/blink.cmp",
 		enabled = true,
 		version = "*",
+		-- version = "v0.11.0",
 		event = { "CmdlineEnter", "InsertEnter" },
 		dependencies = {
 			{
@@ -115,6 +116,7 @@ return {
 						name = "Path",
 						module = "blink.cmp.sources.path",
 						score_offset = 30,
+						min_keyword_length = 2,
 						-- When typing a path, I would get snippets and text in the
 						-- suggestions, I want those to show only if there are no path
 						-- suggestions
@@ -190,18 +192,18 @@ return {
 					-- 	async = true,
 					-- },
 				},
-				-- command line completion, thanks to dpetka2001 in reddit
-				-- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-				cmdline = function()
-					local type = vim.fn.getcmdtype()
-					if type == "/" or type == "?" then
-						return { "buffer" }
-					end
-					if type == ":" then
-						return { "cmdline" }
-					end
-					return {}
-				end,
+				-- -- command line completion, thanks to dpetka2001 in reddit
+				-- -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+				-- cmdline = function()
+				-- 	local type = vim.fn.getcmdtype()
+				-- 	if type == "/" or type == "?" then
+				-- 		return { "buffer" }
+				-- 	end
+				-- 	if type == ":" then
+				-- 		return { "cmdline" }
+				-- 	end
+				-- 	return {}
+				-- end,
 			},
 			snippets = {
 				preset = "luasnip",
@@ -218,6 +220,23 @@ return {
 					require("luasnip").jump(direction)
 				end,
 			},
+			cmdline = {
+				keymap = {
+					["<Tab>"] = { "accept", "fallback" },
+					["<Down>"] = { "select_next", "fallback" },
+					["<Up>"] = { "select_prev", "fallback" },
+				},
+				sources = function()
+					local type = vim.fn.getcmdtype()
+					if type == "/" or type == "?" then
+						return { "buffer" }
+					end
+					if type == ":" then
+						return { "cmdline" }
+					end
+					return {}
+				end,
+			},
 
 			keymap = {
 				preset = "enter",
@@ -229,11 +248,6 @@ return {
 				["<Up>"] = { "select_prev", "fallback" },
 				["<PageDown>"] = { "scroll_documentation_down" },
 				["<PageUp>"] = { "scroll_documentation_up" },
-				cmdline = {
-					["<Tab>"] = { "accept", "fallback" },
-					["<Down>"] = { "select_next", "fallback" },
-					["<Up>"] = { "select_prev", "fallback" },
-				},
 			},
 			completion = {
 				menu = {

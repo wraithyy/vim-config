@@ -6,6 +6,7 @@ return {
 	},
 	config = function()
 		require("noice").setup({
+			notify = { enabled = false },
 			override = {
 				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				["vim.lsp.util.stylize_markdown"] = true,
@@ -26,7 +27,30 @@ return {
 						event = "notify",
 						kind = "error",
 					},
-					view = "mini", -- použijte zkrácené zobrazení
+					view = "notify", -- Use notify view for errors
+				},
+				{
+					filter = {
+						event = "msg_show",
+						kind = { "search_count", "echo" },
+					},
+					opts = { skip = true }, -- Skip these messages
+				},
+				{
+					filter = {
+						event = "lsp",
+						kind = "progress",
+					},
+					view = "mini", -- Use mini view for LSP progress
+				},
+				-- CodeCompanion specific routes
+				{
+					filter = {
+						event = "notify",
+						find = "CodeCompanion",
+					},
+					view = "notify", -- Use notify view for CodeCompanion notifications
+					opts = { timeout = 5000 }, -- 5 second timeout
 				},
 			},
 			views = {

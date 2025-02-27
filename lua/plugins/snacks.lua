@@ -68,7 +68,7 @@ return {
 		keys = {
 			-- find
 			{
-				"<leader>fb",
+				"<leader><leader>",
 				function()
 					Snacks.picker.buffers({ layout = { preset = "select" } })
 				end,
@@ -260,6 +260,21 @@ return {
 					Snacks.lazygit.open()
 				end,
 				desc = "LazyGit",
+			},
+			{
+				"<leader>lf",
+				function()
+					Snacks.lazygit.log_file()
+				end,
+				desc = "LazyGit file",
+			},
+
+			{
+				"<leader>ll",
+				function()
+					Snacks.lazygit.log()
+				end,
+				desc = "LazyGit Log",
 			},
 			{
 				"<leader>gh",

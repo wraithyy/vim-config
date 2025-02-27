@@ -1,17 +1,22 @@
-local user = vim.env.USER or "User"
-
 local adapters = {
 	"ollama-deepseek-13b",
 	"ollama-deepseek-6b",
 	"anthropic",
 }
+
 local function switch_adapter()
 	local Plugin = require("lazy.core.config").plugins["codecompanion.nvim"]
 	if not Plugin then
-		print("CodeCompanion is not loaded!")
+		vim.notify("CodeCompanion is not loaded!", vim.log.levels.ERROR)
 		return
 	end
+
 	local Snacks = require("snacks")
+	if not Snacks then
+		vim.notify("Snacks plugin is required for adapter switching", vim.log.levels.ERROR)
+		return
+	end
+
 	Snacks.picker({
 		finder = function()
 			local items = {}
@@ -29,7 +34,7 @@ local function switch_adapter()
 			local ret = {}
 			local a = Snacks.picker.util.align
 			if file == Plugin.opts.strategies.chat.adapter then
-				ret[#ret + 1] = { "", "SnacksPickerIconEvent" }
+				ret[#ret + 1] = { "", "SnacksPickerIconEvent" }
 			else
 				ret[#ret + 1] = { "󰧑", "SnacksPickerIconFile" }
 			end
@@ -45,29 +50,13 @@ local function switch_adapter()
 			Plugin.opts.strategies.inline.adapter = new_adapter
 			Plugin.opts.strategies.agent.adapter = new_adapter
 
-			print("🔄 Switching CodeCompanion adapter to: " .. new_adapter)
+			vim.notify("🔄 Switching CodeCompanion adapter to: " .. new_adapter, vim.log.levels.INFO)
 			require("lazy.core.loader").reload("codecompanion.nvim")
 
 			picker:close()
 		end,
 	})
-	-- Snacks.picker.pick({
-	-- 	prompt = "Select Adapter", -- The prompt message
-	-- 	items = adapters, -- The list of available adapters
-	-- 	on_select = function(new_adapter)
-	-- 		-- local new_adapter = Plugin.opts.strategies.chat.adapter == "anthropic" and "ollama" or "anthropic"
-	-- 		Plugin.opts.strategies.chat.adapter = new_adapter
-	-- 		Plugin.opts.strategies.inline.adapter = new_adapter
-	-- 		Plugin.opts.strategies.agent.adapter = new_adapter
-	--
-	-- 		print("🔄 Switching CodeCompanion adapter to: " .. new_adapter)
-	-- 		require("lazy.core.loader").reload("codecompanion.nvim")
-	-- 		-- require("codecompanion").setup(Plugin.opts)
-	-- 	end,
-	-- })
 end
-
-vim.api.nvim_create_user_command("CodeCompanionSwitch", switch_adapter, {})
 
 vim.keymap.set("n", "<leader>cx", switch_adapter, { desc = "Switch CodeCompanion adapter" })
 
@@ -75,6 +64,7 @@ return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"folke/noice.nvim",
 		"nvim-treesitter/nvim-treesitter",
 	},
 	cmd = {
@@ -89,6 +79,8 @@ return {
 		{ "<leader>ci", "<cmd>CodeCompanion<cr>", mode = "n", desc = "Inline Prompt" },
 	},
 	init = function()
+		vim.g.codecompanion_auto_tool_mode = true
+		require("config.companion-extension").init()
 		local wk = require("which-key")
 		wk.add({
 			{ "<leader>c", group = "󰚩 CodeCompanion" },
@@ -96,18 +88,13 @@ return {
 			{ "<leader>cc", desc = " New Chat" },
 			{ "<leader>cA", desc = "󰐕 Add Code" },
 			{ "<leader>ci", desc = " Inline Prompt" },
+			{ "<leader>cx", desc = "🔄 Switch Adapter" },
 		})
-		vim.cmd([[cab cc CodeCompanion]])
 	end,
 	opts = {
-		debug = true,
-		auto_focus = true,
-		window = {
-			border = "rounded",
-			width = 0.6,
-			height = 0.8,
-			position = "right",
-		},
+		-- Enable debug logging to troubleshoot action errors
+		log_level = "DEBUG",
+
 		adapters = {
 			["ollama-deepseek-6b"] = function()
 				return require("codecompanion.adapters").extend("ollama", {
@@ -132,47 +119,89 @@ return {
 			},
 		},
 		display = {
-			provider = "mini_diff",
+			diff = { provider = "mini_diff" },
 			chat = {
-				show_header_separator = true,
 				show_settings = true,
 				show_token_count = true,
+				token_count = function(tokens, adapter)
+					local input_ratio = 0.8
+					local output_ratio = 0.2
+
+					local input_tokens = tokens * input_ratio
+					local output_tokens = tokens * output_ratio
+
+					local input_cost = (input_tokens / 1000000) * 3 -- $3 / 1M
+					local output_cost = (output_tokens / 1000000) * 15 -- $15 / 1M
+
+					local total_cost = input_cost + output_cost
+					return string.format(" (%d tokenů, odhad: $%.4f)", tokens, total_cost)
+				end,
 			},
 		},
 
-		prompts = {
+		prompt_library = {
 			["Generate Types"] = {
-				type = "chat",
+				strategy = "chat",
 				description = "Generate TypeScript types/interfaces for your code",
 				command = "types",
-				mode = "v",
-				filter = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-				system = "You are an expert TypeScript developer focused on creating precise, well-documented types and interfaces.",
-				prompt = function(ctx)
-					return "Generate TypeScript types or interfaces for the following code. Make them strict and well-documented. If there are any potential improvements for type safety, suggest them:\n\n```"
-						.. ctx.filetype
-						.. "\n"
-						.. ctx.selection
-						.. "\n```"
-				end,
+				modes = { "v" },
+				prompts = {
+					{
+						role = "system",
+						content = "You are an expert TypeScript developer focused on creating precise, well-documented types and interfaces.",
+					},
+					{
+						role = "user",
+						content = function(ctx)
+							return string.format(
+								[[Generate TypeScript types or interfaces for the following code. Make them strict and well-documented. If there are any potential improvements for type safety, suggest them:
+
+```%s
+%s
+```]],
+								ctx.filetype,
+								ctx.selection
+							)
+						end,
+					},
+				},
 			},
 			["Code Review"] = {
-				type = "chat",
+				strategy = "chat",
 				description = "Review code for best practices and improvements",
 				command = "review",
-				mode = { "n", "v" },
-				system = function(ctx)
-					return "You are a senior "
-						.. ctx.filetype
-						.. " developer performing a thorough code review. Focus on best practices, security, and performance."
-				end,
-				prompt = function(ctx)
-					return "Review this code and provide feedback on:\n- Code quality and best practices\n- Performance considerations\n- Potential bugs\n- Code organization\n- Error handling\n- Security concerns\n\n```"
-						.. ctx.filetype
-						.. "\n"
-						.. (ctx.selection or ctx.buffer_content)
-						.. "\n```"
-				end,
+				modes = { "n", "v" },
+				prompts = {
+					{
+						role = "system",
+						content = function(ctx)
+							return string.format(
+								"You are a senior %s developer performing a thorough code review. Focus on best practices, security, and performance.",
+								ctx.filetype
+							)
+						end,
+					},
+					{
+						role = "user",
+						content = function(ctx)
+							return string.format(
+								[[Review this code and provide feedback on:
+- Code quality and best practices
+- Performance considerations
+- Potential bugs
+- Code organization
+- Error handling
+- Security concerns
+
+```%s
+%s
+```]],
+								ctx.filetype,
+								ctx.selection or ctx.buffer_content
+							)
+						end,
+					},
+				},
 			},
 		},
 	},
