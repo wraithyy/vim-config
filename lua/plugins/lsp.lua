@@ -72,8 +72,37 @@ return {
 		},
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
-			local lspconfig = require("lspconfig")
+			local configs = require("lspconfig.configs")
+			if not configs.sonarlint then
+				configs.sonarlint = {
+					default_config = {
+						-- Získáme cestu ke spustitelnému souboru pomocí Mason registru
+						cmd = {
+							require("mason-registry").get_package("sonarlint-language-server"):get_install_path()
+								.. "/sonarlint-language-server",
+							"-stdio",
+						},
+						filetypes = {
+							"python",
+							"java",
+							"javascript",
+							"typescript",
+							"typescriptreact",
+							"javascriptreact",
+						},
+						root_dir = require("lspconfig/util").root_pattern(".git", "package.json", "setup.py")
+							or vim.fn.getcwd,
+						settings = {},
+					},
+				}
+			end
 
+			local lspconfig = require("lspconfig")
+			local mason_registry = require("mason-registry")
+			local util = require("lspconfig/util")
+			if not mason_registry.is_installed("sonarlint-language-server") then
+				mason_registry.get_package("sonarlint-language-server"):install()
+			end
 			-- Setup for TypeScript server
 			lspconfig.ts_ls.setup({
 				on_attach = on_attach,
@@ -89,6 +118,7 @@ return {
 			lspconfig.rust_analyzer.setup({
 				on_attach = on_attach,
 			})
+			lspconfig.sonarlint.setup({})
 		end,
 	},
 }

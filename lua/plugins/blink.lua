@@ -1,8 +1,6 @@
 local trigger_text = "!"
 return {
-
 	{
-
 		"saghen/blink.compat",
 		version = false,
 	},
@@ -15,8 +13,10 @@ return {
 	{
 		"saghen/blink.cmp",
 		enabled = true,
-		version = "*",
+		version = "1.*",
+		-- version = "*",
 		-- version = "v0.11.0",
+		build = "cargo build --release",
 		event = { "CmdlineEnter", "InsertEnter" },
 		dependencies = {
 			{
@@ -226,16 +226,19 @@ return {
 					["<Down>"] = { "select_next", "fallback" },
 					["<Up>"] = { "select_prev", "fallback" },
 				},
-				sources = function()
-					local type = vim.fn.getcmdtype()
-					if type == "/" or type == "?" then
-						return { "buffer" }
-					end
-					if type == ":" then
-						return { "cmdline" }
-					end
-					return {}
-				end,
+				completion = {
+					menu = { auto_show = true },
+				},
+				-- sources = function()
+				-- 	local type = vim.fn.getcmdtype()
+				-- 	if type == "/" or type == "?" then
+				-- 		return { "buffer" }
+				-- 	end
+				-- 	if type == ":" then
+				-- 		return { "cmdline" }
+				-- 	end
+				-- 	return {}
+				-- end,
 			},
 
 			keymap = {
@@ -255,13 +258,13 @@ return {
 					draw = {
 						columns = {
 							{ "label", "label_description", gap = 2 },
-							{ "kind_icon", gap = 1, "kind" },
+							{ "kind_icon" },
 						},
 					},
 				},
 				documentation = { window = { border = "rounded" }, auto_show = true, auto_show_delay_ms = 500 },
 			},
-
+			fuzzy = { implementation = "prefer_rust_with_warning" },
 			signature = { window = { border = "rounded" }, enabled = true },
 		},
 	},

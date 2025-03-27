@@ -224,6 +224,13 @@ return {
 				end,
 				desc = "Projects",
 			},
+			{
+				"<leader>sn",
+				function()
+					Snacks.picker.notifications()
+				end,
+				desc = "Notifications",
+			},
 			-- LSP
 			{
 				"gd",

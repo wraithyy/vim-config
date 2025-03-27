@@ -18,8 +18,9 @@ return {
 					theme = "catppuccin-mocha",
 					globalstatus = true,
 					always_divide_middle = false,
-					section_separators = { left = "█▒", right = "▒█" },
+					section_separators = { left = "█", right = "█" },
 					component_separators = { left = "󱋱", right = "󱋱" },
+					-- disable_filetype = { "dashboard", "alpha", "neo-tree" },
 				},
 				sections = {
 					lualine_a = {
@@ -97,7 +98,7 @@ return {
 		init = function()
 			package.preload["nvim-web-devicons"] = function()
 				require("mini.icons").mock_nvim_web_devicons()
-				return package.loaded["nvim-web-devicons"]
+				return package.loaded["nvim-wwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebwebewebwebwebwebwebwebwebwebwebwebwebwebwebwebb-devicons"]
 			end
 		end,
 	},

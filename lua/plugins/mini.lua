@@ -23,7 +23,8 @@ return {
 					encode = map.gen_encode_symbols.dot("4x2"), -- Značky pro zobrazení
 				},
 				window = {
-					show_integration_count = false,
+					show_integration_count = true,
+					focusable = false,
 					side = "right", -- Zobrazení mapy na pravé straně
 					width = 20, -- Šířka mapy
 					winblend = 0,

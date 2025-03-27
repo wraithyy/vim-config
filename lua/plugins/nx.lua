@@ -71,9 +71,9 @@ return {
 	keys = {
 		{ "<leader>nx", "<cmd>Telescope nx actions<CR>", desc = "Open nx actions" },
 	},
-	dependencies = {
-		"nvim-telescope/telescope.nvim",
-	},
+	-- dependencies = {
+	-- 	"nvim-telescope/telescope.nvim",
+	-- },
 	config = function()
 		local nx = require("nx")
 
