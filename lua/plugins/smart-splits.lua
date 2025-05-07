@@ -1,7 +1,21 @@
 return {
 	"mrjones2014/smart-splits.nvim",
 	config = function()
-		require("smart-splits").setup({ multiplexer = "tmux" })
+		require("smart-splits").setup({
+			multiplexer = "tmux",
+			ignored_filetypes = {
+				"neo-tree",
+				"NvimTree",
+				"Outline",
+				"aerial",
+				"undotree",
+				"qf",
+				"toggleterm",
+				"TelescopePrompt",
+				"alpha",
+			},
+			ignored_buftypes = { "nofile", "prompt", "popup" },
+		})
 		vim.keymap.set(
 			"n",
 			"<A-h>",

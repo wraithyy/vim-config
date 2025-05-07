@@ -13,6 +13,7 @@ require("config.autoroot")
 require("config.remap")
 require("config.diagnostics-design")
 vim.opt.relativenumber = true
+
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.cursorline = true

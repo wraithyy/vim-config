@@ -1,15 +1,16 @@
+-- Kompletní moderní LSP config s podporou lazy.nvim a typescript-tools.nvim
+
 local function lsp_highlight_document(client)
 	if client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+		local group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
 		vim.api.nvim_create_autocmd("CursorHold", {
-			group = "lsp_document_highlight",
+			group = group,
 			callback = function()
 				vim.lsp.buf.document_highlight()
 			end,
 		})
 		vim.api.nvim_create_autocmd("CursorMoved", {
-			group = "lsp_document_highlight",
-			buffer = 0,
+			group = group,
 			callback = function()
 				vim.lsp.buf.clear_references()
 			end,
@@ -17,108 +18,121 @@ local function lsp_highlight_document(client)
 	end
 end
 
-local on_attach = function(client, bufnr)
-	require("twoslash-queries").attach(client, bufnr)
+local function on_attach(client, bufnr)
+	local bufmap = function(mode, lhs, rhs, desc)
+		vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+	end
+
+	if client.name == "typescript-tools" then
+		local ok, twoslash = pcall(require, "twoslash-queries")
+		if ok then
+			twoslash.attach(client, bufnr)
+		end
+	end
+
 	lsp_highlight_document(client)
 
-	-- local telescope = require("telescope.builtin")
-
-	-- Keymaps for LSP functions
-	local opts = { buffer = bufnr, desc = "LSP action" }
-	-- vim.keymap.set("n", "gd", telescope.lsp_definitions, { buffer = bufnr, desc = "Go to Definition" })
-	-- vim.keymap.set("n", "gr", telescope.lsp_references, { buffer = bufnr, desc = "Find References" })
-	-- vim.keymap.set("n", "gi", telescope.lsp_implementations, { buffer = bufnr, desc = "Go to Implementation" })
-	-- vim.keymap.set("n", "go", telescope.lsp_type_definitions, { buffer = bufnr, desc = "Go to Type Definition" })
-	-- vim.keymap.set("n", "gs"telescope, telescope.lsp_document_symbols, { buffer = bufnr, desc = "Document Symbols" })
-
-	-- Standard LSP keymaps
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover Documentation" })
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to Declaration" })
-	vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
-	vim.keymap.set("n", "<leader>d", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename Symbol" })
-	vim.keymap.set({ "n", "x" }, "<F3>", function()
+	bufmap("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+	bufmap("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+	bufmap("n", "<F2>", vim.lsp.buf.rename, "Rename Symbol")
+	bufmap("n", "<F4>", vim.lsp.buf.code_action, "Code Actions")
+	bufmap("n", "<leader>k", vim.lsp.buf.signature_help, "Signature Help")
+	bufmap({ "n", "x" }, "<F3>", function()
 		vim.lsp.buf.format({ async = true })
-	end, { buffer = bufnr, desc = "Format Document" })
-	vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Actions" })
-	vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Signature Help" })
+	end, "Format Document")
+end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local ok_cmp, blink = pcall(require, "blink.cmp")
+if ok_cmp then
+	capabilities = blink.get_lsp_capabilities(capabilities)
 end
 
 return {
-	-- Mason setup for installing LSP servers
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
+		build = ":MasonUpdate",
 		lazy = false,
 		config = true,
 	},
-
 	{
-		"williamboman/mason-lspconfig.nvim",
-		lazy = true,
+		"mason-org/mason-lspconfig.nvim",
 		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = { "eslint", "rust_analyzer", "biome" },
+			automatic_enable = false
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+		},
 		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "ts_ls", "rust_analyzer" },
+			local lspconfig = require("lspconfig")
+
+			local eslint_root = require("lspconfig.util").root_pattern(
+				".eslintrc.js",
+				".eslintrc.cjs",
+				".eslintrc.json",
+				".eslintrc.yaml",
+				".eslintrc.yml",
+				"eslint.config.js",
+				"package.json"
+			)
+
+			local function has_eslint_config(root)
+				local files = vim.fn.globpath(root, ".eslintrc.*", false, true)
+				if #files > 0 then
+					return true
+				end
+				return vim.fn.filereadable(root .. "/eslint.config.js") == 1
+			end
+
+			local function setup_eslint_if_needed()
+				local cwd = vim.loop.cwd()
+				local root = eslint_root(cwd)
+				if root and has_eslint_config(root) then
+					lspconfig.eslint.setup({
+						on_attach = on_attach,
+						capabilities = capabilities,
+						root_dir = function()
+							return root
+						end,
+					})
+				end
+			end
+
+			setup_eslint_if_needed()
+
+			lspconfig.rust_analyzer.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
+
+			lspconfig.biome.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
 			})
 		end,
 	},
-
-	-- Native LSP configuration using nvim-lspconfig
 	{
-		"neovim/nvim-lspconfig",
-		lazy = true,
-		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-		},
+		"pmizio/typescript-tools.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			local configs = require("lspconfig.configs")
-			if not configs.sonarlint then
-				configs.sonarlint = {
-					default_config = {
-						-- Získáme cestu ke spustitelnému souboru pomocí Mason registru
-						cmd = {
-							require("mason-registry").get_package("sonarlint-language-server"):get_install_path()
-								.. "/sonarlint-language-server",
-							"-stdio",
-						},
-						filetypes = {
-							"python",
-							"java",
-							"javascript",
-							"typescript",
-							"typescriptreact",
-							"javascriptreact",
-						},
-						root_dir = require("lspconfig/util").root_pattern(".git", "package.json", "setup.py")
-							or vim.fn.getcwd,
-						settings = {},
-					},
-				}
-			end
-
-			local lspconfig = require("lspconfig")
-			local mason_registry = require("mason-registry")
-			local util = require("lspconfig/util")
-			if not mason_registry.is_installed("sonarlint-language-server") then
-				mason_registry.get_package("sonarlint-language-server"):install()
-			end
-			-- Setup for TypeScript server
-			lspconfig.ts_ls.setup({
-				on_attach = on_attach,
-			})
-			lspconfig.eslint.setup({
-				on_attach = on_attach,
-			})
-			lspconfig.biome.setup({
-				on_attach = on_attach,
-			})
-
-			-- Setup for Rust analyzer
-			lspconfig.rust_analyzer.setup({
-				on_attach = on_attach,
-			})
-			lspconfig.sonarlint.setup({})
-		end,
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				separate_diagnostic_server = false,
+				publish_diagnostic_on = "insert_leave",
+				tsserver_file_preferences = {
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				},
+			},
+		},
 	},
 }

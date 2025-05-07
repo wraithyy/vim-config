@@ -31,6 +31,9 @@ return {
 		---@type blink.cmp.Config
 		opts = {
 			sources = {
+				per_filetype = {
+					codecompanion = { "codecompanion" }, -- <<< jen CodeCompanion zdroj
+				},
 				default = {
 					"lazydev",
 					"lsp",
@@ -43,14 +46,41 @@ return {
 					"obsidian",
 					"obsidian_tags",
 					"obsidian_new",
+					"avante_commands",
+					"avante_mentions",
+					"avante_files",
 				},
 				providers = {
+					avante_commands = {
+						name = "avante_commands",
+						module = "blink.compat.source",
+						score_offset = 90, -- show at a higher priority than lsp
+						opts = {},
+					},
+					avante_files = {
+						name = "avante_files",
+						module = "blink.compat.source",
+						score_offset = 100, -- show at a higher priority than lsp
+						opts = {},
+					},
+					avante_mentions = {
+						name = "avante_mentions",
+						module = "blink.compat.source",
+						score_offset = 1000, -- show at a higher priority than lsp
+						opts = {},
+					},
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
 						-- make lazydev completions top priority (see `:h blink.cmp`)
 						score_offset = 100,
 					},
+					-- codecompanion = {
+					-- 	name = "CodeCompanion",
+					-- 	module = "codecompanion.integrations.blink",
+					-- 	score_offset = 100,
+					-- 	min_keyword_length = 0,
+					-- },
 					lsp = {
 						name = "lsp",
 						enabled = true,
@@ -121,6 +151,9 @@ return {
 						-- suggestions, I want those to show only if there are no path
 						-- suggestions
 						fallbacks = { "snippets", "buffer" },
+						should_show_items = function()
+							return vim.bo.filetype ~= "codecompanion"
+						end,
 						opts = {
 							trailing_slash = false,
 							label_trailing_slash = true,
@@ -142,6 +175,9 @@ return {
 						module = "blink-ripgrep",
 						name = "Ripgrep",
 						score_offset = 15,
+						should_show_items = function()
+							return vim.bo.filetype ~= "codecompanion"
+						end,
 						-- the options below are optional, some default values are shown
 						---@module "blink-ripgrep"
 						---@type blink-ripgrep.Options

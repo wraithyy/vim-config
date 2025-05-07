@@ -1,8 +1,7 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", function()
-	vim.cmd("Neotree position=current reveal=true source=filesystem")
-end, { desc = "Open Explorer" })
-
+-- vim.keymap.set("n", "<leader>pv", function()
+-- 	vim.cmd("Neotree position=current reveal=true source=filesystem")
+-- end, { desc = "Open Explorer" })
 vim.keymap.set(
 	"n",
 	"<leader>.",
@@ -20,6 +19,15 @@ vim.o.langmap = table.concat({
 	"2@,3#,4$,5~,6^,7&,=%,8*,9{,0}",
 }, ",")
 
+-- Zavře všechny buffery kromě aktuálního a neo-tree
+vim.keymap.set("n", "<Leader>q", function()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		local filetype = vim.api.nvim_buf_get_option(buf, "filetype")
+		if filetype ~= "neo-tree" and buf ~= vim.api.nvim_get_current_buf() then
+			vim.api.nvim_buf_delete(buf, { force = true })
+		end
+	end
+end, { noremap = true, silent = true, desc = "Close all other buffers" })
 vim.keymap.set("n", "<space>", "<nop>")
 -- -- Number remaps --
 -- vim.keymap.set("n", "+", "1", { noremap = true })

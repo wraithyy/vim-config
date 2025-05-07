@@ -6,7 +6,7 @@ return {
 		---@type snacks.Config
 		opts = {
 			-- TODO: statuscolumn, dim,
-			statuscolumn = { enabled = true },
+			statuscolumn = { enabled = true, left = { "sign", "mark" } },
 			bigfile = { enabled = true },
 			words = { enabled = true },
 			lazygit = {},
@@ -18,6 +18,7 @@ return {
 			notifier = { enabled = true },
 			scope = { enabled = true },
 			quickfile = { enabled = true },
+			-- explorer = { auto_close = true, replace_netrw = true },
 			picker = {
 				layout = { preset = "telescope" },
 				formatters = {
@@ -290,6 +291,13 @@ return {
 				end,
 				desc = "File History",
 			},
+			-- {
+			-- 	"<leader>ee",
+			-- 	function()
+			-- 		Snacks.explorer()
+			-- 	end,
+			-- 	desc = "Explorer",
+			-- },
 		},
 	},
 	{

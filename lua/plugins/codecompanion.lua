@@ -76,6 +76,9 @@ return {
 							model = "deepseek-coder:13b",
 						})
 					end,
+					copilot = function()
+						return require("codecompanion.adapters").extend("copilot", {})
+					end,
 				},
 				strategies = {
 					chat = {
